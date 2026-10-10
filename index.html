@@ -74,9 +74,61 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #C8102E;
     }
-    .kanban-col {
+    .kanban-col, .goat-kanban-col {
       min-width: 275px;
       max-width: 305px;
+    }
+    @media (max-width: 640px) {
+      .kanban-col, .goat-kanban-col {
+        min-width: 82vw;
+        max-width: 86vw;
+      }
+    }
+    /* Mobile-first bottom navigation styling */
+    .mobile-bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 45;
+      background: rgba(10, 10, 10, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      padding: 6px 4px calc(env(safe-area-inset-bottom, 0px) + 6px) 4px;
+    }
+    .mobile-nav-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 6px 8px;
+      font-size: 10px;
+      font-weight: 700;
+      color: #a3a3a3;
+      border-radius: 10px;
+      transition: all 0.2s ease;
+      flex: 1;
+      text-align: center;
+    }
+    .mobile-nav-btn.active {
+      color: #ffffff;
+      background: rgba(200, 16, 46, 0.25);
+      border: 1px solid rgba(200, 16, 46, 0.5);
+    }
+    .mobile-nav-btn.goat-active {
+      color: #fbbf24;
+      background: rgba(245, 158, 11, 0.2);
+      border: 1px solid rgba(245, 158, 11, 0.5);
+    }
+    /* Touch friendly horizontal smooth scrolling */
+    .smooth-scroll-touch {
+      -webkit-overflow-scrolling: touch;
+      scroll-behavior: smooth;
     }
     /* Solid Jet-Black Monochrome Logo for High Contrast B&W / Thermal Printing */
     .invoice-black-logo {
@@ -157,6 +209,7 @@
       50% { left: 96%; opacity: 0.85; }
       75% { opacity: 0.9; }
       100% { left: 4%; opacity: 0.15; }
+    }
     /* Vibrant Ambient Aurora Studio Lighting (Breaks the darkness completely) */
     @keyframes studioAurora1 {
       0% { transform: translate(-10%, -8%) rotate(0deg) scale(1); }
@@ -255,7 +308,7 @@
   </div>
 
   <!-- 1.5 REAL LOGIN SCREEN (WARM CHARCOAL STUDIO LIGHTING & GLOWING CRIMSON CARD) -->
-  <div id="loginScreen" class="fixed inset-0 z-40 bg-[#121217] flex items-center justify-center p-4 transition-opacity duration-500 hidden overflow-hidden">
+  <div id="loginScreen" class="fixed inset-0 z-40 bg-[#121217] flex items-center justify-center p-3 sm:p-4 transition-opacity duration-500 hidden overflow-y-auto">
     
     <!-- WARM & COMFORTABLE STUDIO AMBIENT LIGHTING BACKGROUND -->
     <div class="absolute inset-0 overflow-hidden pointer-events-none select-none">
@@ -268,7 +321,7 @@
       <div class="aurora-studio-center"></div>
 
       <!-- Subtle Clean Studio Watermark in Deep Center -->
-      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[420px] h-[420px] opacity-[0.055] flex items-center justify-center">
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[280px] sm:w-[420px] h-[280px] sm:h-[420px] opacity-[0.055] flex items-center justify-center">
         <img class="app-logo-img max-w-full max-h-full object-contain" src="logo.svg" onerror="handleLogoError(this)" alt="">
       </div>
 
@@ -292,7 +345,7 @@
     </div>
 
     <!-- VIBRANT GLOWING CRIMSON LOGIN CARD -->
-    <div id="loginCard" class="glowing-crimson-card relative z-20 w-full max-w-md rounded-3xl p-8 space-y-5 transition-all duration-300">
+    <div id="loginCard" class="glowing-crimson-card relative z-20 w-full max-w-md rounded-3xl p-5 sm:p-8 space-y-4 sm:space-y-5 transition-all duration-300 my-auto">
       
       <!-- Studio Logo & Header -->
       <div class="text-center">
@@ -349,102 +402,193 @@
   <!-- 2. MAIN APPLICATION -->
   <div id="appContainer" class="opacity-0 transition-opacity duration-500 min-h-screen flex flex-col hidden">
     
-    <!-- TOP NAVIGATION BAR (Enlarged & Polished) -->
-    <header class="h-20 border-b border-neutral-800/80 bg-neutral-950/80 backdrop-blur sticky top-0 z-40 px-6 flex items-center justify-between">
-      <!-- Right: Logo & Studio Title -->
-      <div class="flex items-center gap-4">
-        <div onclick="promptUploadLogo()" class="w-16 h-16 rounded-2xl bg-neutral-950 border border-brand-red/40 flex items-center justify-center p-1.5 shadow-[0_0_20px_rgba(200,16,46,0.35)] overflow-hidden cursor-pointer group" title="شعار الاستوديو - انقر لتغيير اللوجو (المدير العام)">
+    <!-- TOP NAVIGATION BAR (Responsive on Mobile, Tablet & Desktop) -->
+    <header class="h-16 sm:h-20 border-b border-neutral-800/80 bg-neutral-950/95 backdrop-blur sticky top-0 z-40 px-3 sm:px-6 flex items-center justify-between gap-2.5">
+      <!-- Right: Logo & Studio / Brand Title -->
+      <div class="flex items-center gap-2 sm:gap-4 flex-shrink-0">
+        <div onclick="promptUploadLogo()" class="w-11 h-11 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl bg-neutral-950 border border-brand-red/40 flex items-center justify-center p-1 sm:p-1.5 shadow-[0_0_20px_rgba(200,16,46,0.35)] overflow-hidden cursor-pointer group flex-shrink-0" title="شعار الاستوديو - انقر لتغيير اللوجو (المدير العام)">
           <img id="headerLogoImg" class="app-logo-img max-w-full max-h-full object-contain drop-shadow-[0_0_10px_rgba(200,16,46,0.5)] group-hover:scale-105 transition" src="logo.svg" onerror="handleLogoError(this)" alt="Ahmed Shahin ADV">
         </div>
-        <div>
-          <span class="text-xs text-neutral-400 font-semibold block leading-none">لوحة التحكم المركزية</span>
-          <span class="text-base font-bold text-white tracking-wide">Ahmed Shahin <span class="text-brand-red">ADV</span></span>
+        <div class="hidden xs:block sm:block flex-shrink-0">
+          <span class="text-[10px] sm:text-xs text-neutral-400 font-semibold block leading-none" id="headerWorkspaceSubtitle">لوحة التحكم المركزية</span>
+          <span class="text-xs sm:text-base font-bold text-white tracking-wide" id="headerWorkspaceTitle">Ahmed Shahin <span class="text-brand-red">ADV</span></span>
         </div>
       </div>
 
-      <!-- Center: Main Navigation Tabs -->
-      <nav class="hidden md:flex items-center gap-1 bg-neutral-900/90 p-1 rounded-xl border border-neutral-800">
-        <button onclick="switchView('orders')" id="navOrders" class="px-4 py-1.5 rounded-lg text-sm font-bold bg-brand-red text-white flex items-center gap-2 transition">
+      <!-- Center: Main Navigation Tabs (Desktop & Tablet) -->
+      <!-- 1. ADV Studio Navigation Tabs -->
+      <nav id="navAdvTabsContainer" class="hidden lg:flex items-center gap-1 bg-neutral-900/90 p-1 rounded-xl border border-neutral-800 flex-shrink-0">
+        <button onclick="switchView('orders')" id="navOrders" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-bold bg-brand-red text-white flex items-center gap-1.5 transition">
           <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
-          الطلبات (الكانبان)
+          <span>الطلبات</span>
         </button>
-        <button onclick="switchView('customers')" id="navCustomers" class="px-4 py-1.5 rounded-lg text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 flex items-center gap-2 transition">
+        <button onclick="switchView('customers')" id="navCustomers" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 flex items-center gap-1.5 transition">
           <i data-lucide="users" class="w-4 h-4"></i>
-          العملاء
+          <span>العملاء</span>
         </button>
         <!-- Products & Pricing Catalog Tab -->
-        <button onclick="switchView('pricing')" id="navPricing" class="px-4 py-1.5 rounded-lg text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 flex items-center gap-2 transition">
+        <button onclick="switchView('pricing')" id="navPricing" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 flex items-center gap-1.5 transition">
           <i data-lucide="tags" class="w-4 h-4 text-amber-400"></i>
           <span id="navPricingText">قائمة الأسعار والمنتجات</span>
         </button>
         <!-- Admin-Only Tab: Expenses & Net Profit -->
-        <button onclick="switchView('expenses')" id="navExpenses" class="px-4 py-1.5 rounded-lg text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 flex items-center gap-2 transition">
+        <button onclick="switchView('expenses')" id="navExpenses" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 flex items-center gap-1.5 transition">
           <i data-lucide="calculator" class="w-4 h-4 text-emerald-400"></i>
-          الحسابات والمصاريف
+          <span>الحسابات والمصاريف</span>
         </button>
         <!-- Reports Tab -->
-        <button onclick="switchView('reports')" id="navReports" class="px-4 py-1.5 rounded-lg text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 flex items-center gap-2 transition">
+        <button onclick="switchView('reports')" id="navReports" class="px-3.5 py-1.5 rounded-lg text-xs sm:text-sm font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 flex items-center gap-1.5 transition">
           <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
-          التقارير
+          <span>التقارير</span>
+        </button>
+      </nav>
+
+      <!-- 2. G.O.A.T Brand Dedicated Navigation Tabs (Active in G.O.A.T Workspace) -->
+      <nav id="navGoatTabsContainer" class="hidden items-center gap-1 bg-neutral-900/90 p-1 rounded-xl border border-amber-500/30 flex-shrink-0">
+        <button onclick="switchGoatTab('kanban')" id="navGoatKanban" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-black bg-gradient-to-r from-amber-500 to-yellow-500 text-black flex items-center gap-1.5 transition shadow-[0_0_15px_rgba(245,158,11,0.25)]">
+          <span class="text-sm">🐐</span>
+          <span>كانبان الديجيتال</span>
+        </button>
+        <button onclick="switchGoatTab('treasury')" id="navGoatTreasury" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-amber-300 hover:text-white hover:bg-neutral-800 flex items-center gap-1.5 transition">
+          <i data-lucide="wallet" class="w-4 h-4 text-amber-400"></i>
+          <span>خزينة وحسابات شاهين 👑</span>
+        </button>
+        <button onclick="switchGoatTab('expenses')" id="navGoatExpenses" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-amber-300 hover:text-white hover:bg-neutral-800 flex items-center gap-1.5 transition">
+          <i data-lucide="receipt" class="w-4 h-4 text-amber-400"></i>
+          <span>مصاريف الديجيتال 💸</span>
+        </button>
+        <button onclick="switchGoatTab('designers')" id="navGoatDesigners" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-amber-300 hover:text-white hover:bg-neutral-800 flex items-center gap-1.5 transition">
+          <i data-lucide="palette" class="w-4 h-4 text-purple-400"></i>
+          <span>كشف حساب المصممين 🎨</span>
+        </button>
+        <button onclick="switchToAdvWorkspace()" class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-neutral-300 hover:text-white hover:bg-neutral-800 border border-neutral-700 flex items-center gap-1.5 transition" title="الرجوع إلى استوديو الطباعة">
+          <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-brand-red"></i>
+          <span>العودة لـ ADV ↩️</span>
         </button>
       </nav>
 
       <!-- Left: Actions, Profile & Session Controls -->
-      <div class="flex items-center gap-2.5">
+      <div class="flex items-center gap-2 sm:gap-2.5 flex-shrink-0">
         <!-- Live Cloud Sync Indicator Badge (Supabase) -->
         <div id="cloudSyncStatusBadge" class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-950/50 border border-emerald-800/50 text-[10px] text-emerald-400 font-mono" title="حالة الاتصال السحابي بقاعدة بيانات Supabase">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
           <span id="cloudSyncStatusText">سحابي متصل ⚡</span>
         </div>
 
-        <!-- Install App PWA Button -->
-        <button id="installAppBtn" onclick="triggerPwaInstall()" class="bg-gradient-to-r from-red-900/60 to-[#C8102E]/80 hover:brightness-125 text-white border border-brand-red/60 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-[0_0_15px_rgba(200,16,46,0.35)] transition cursor-pointer" title="تثبيت لوحة التحكم كتطبيق على هاتفك أو جهازك">
-          <i data-lucide="smartphone" class="w-3.5 h-3.5 text-amber-300"></i>
-          <span>تثبيت التطبيق 📲</span>
+        <!-- Dynamic New Order Button (Adapts to Active Workspace) -->
+        <button id="headerNewOrderBtn" onclick="handleHeaderNewOrder()" class="bg-brand-red hover:bg-brand-hoverRed text-white px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-[0_0_15px_rgba(200,16,46,0.3)] transition flex-shrink-0 cursor-pointer">
+          <i data-lucide="plus-circle" id="headerNewOrderIcon" class="w-4 h-4"></i>
+          <span id="headerNewOrderText">أوردر جديد</span>
         </button>
 
-        <!-- New Order Button -->
-        <button onclick="openNewOrderModal()" class="bg-brand-red hover:bg-brand-hoverRed text-white px-3.5 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 shadow-[0_0_15px_rgba(200,16,46,0.3)] transition">
-          <i data-lucide="plus-circle" class="w-4 h-4"></i>
-          أوردر جديد
-        </button>
+        <!-- USER PROFILE & WORKSPACE SWITCHER DROPDOWN (AHMED SHAHIN ADV <-> G.O.A.T) -->
+        <div class="relative flex-shrink-0" id="profileDropdownContainer">
+          <button type="button" id="userProfileDropdownBtn" onclick="toggleProfileDropdown(event)" class="flex items-center gap-2 p-1 sm:px-2.5 sm:py-1.5 rounded-xl bg-neutral-900/90 hover:bg-neutral-800 border border-neutral-800 hover:border-neutral-700 transition cursor-pointer group select-none flex-shrink-0" title="قائمة الحساب ومساحات العمل">
+            <!-- Avatar -->
+            <div class="w-8 h-8 rounded-full bg-brand-red/20 border border-brand-red flex items-center justify-center text-xs font-bold text-white group-hover:scale-105 transition flex-shrink-0" id="userAvatar">
+              أش
+            </div>
+            <!-- Name & Role -->
+            <div class="text-right hidden sm:block">
+              <span class="text-xs font-bold text-white block leading-tight flex items-center gap-1">
+                <span id="userNameLabel">أحمد شاهين</span>
+              </span>
+              <span class="text-[10px] text-brand-red font-semibold block leading-tight" id="userRoleBadge">المدير العام 👑</span>
+            </div>
+            <!-- Dropdown Chevron -->
+            <i data-lucide="chevron-down" id="profileChevronIcon" class="w-3.5 h-3.5 text-neutral-400 group-hover:text-white transition-transform duration-200"></i>
+          </button>
 
-        <!-- Manage Users Button (Super Admin Ahmed Shahin Only) -->
-        <button id="manageUsersBtn" onclick="openManageUsersModal()" class="hidden bg-neutral-900 hover:bg-neutral-800 text-amber-400 border border-neutral-800 px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition" title="إدارة المستخدمين وكلمات المرور">
-          <i data-lucide="users" class="w-3.5 h-3.5"></i>
-          <span>إدارة المستخدمين</span>
-        </button>
+          <!-- DROPDOWN MENU MODAL -->
+          <div id="userProfileDropdownMenu" class="hidden absolute left-0 mt-2 w-72 bg-[#121218] border border-neutral-800 rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.9)] z-50 overflow-hidden divide-y divide-neutral-800/80 backdrop-blur-xl">
+            
+            <!-- User Header Summary -->
+            <div class="p-3.5 bg-neutral-950/90 flex items-center justify-between">
+              <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-full bg-brand-red/20 border border-brand-red text-white flex items-center justify-center font-bold text-xs" id="dropdownAvatar">
+                  أش
+                </div>
+                <div>
+                  <span class="text-xs font-bold text-white block" id="dropdownUserName">أحمد شاهين</span>
+                  <span class="text-[10px] text-brand-red font-medium block" id="dropdownUserRole">المدير العام 👑</span>
+                </div>
+              </div>
+              <button type="button" onclick="promptEditMyName(); closeProfileDropdown();" class="p-1.5 text-neutral-400 hover:text-amber-300 rounded-lg hover:bg-neutral-900 transition" title="تعديل اسمي الشخصي">
+                <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
 
-        <!-- Manage Designers Button (Visible to all users) -->
-        <button onclick="openManageDesignersModal()" class="bg-neutral-900 hover:bg-neutral-800 text-purple-300 hover:text-white border border-purple-900/40 px-2.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition" title="دليل وإدارة المصممين الثابتين">
-          <i data-lucide="palette" class="w-3.5 h-3.5 text-purple-400"></i>
-          <span>دليل المصممين</span>
-        </button>
+            <!-- WORKSPACE / BRAND SWITCHER SECTION (Ahmed Shahin ADV <-> G.O.A.T) -->
+            <div class="p-2 space-y-1.5 bg-neutral-900/40">
+              <span class="text-[10px] font-bold text-neutral-400 px-2 py-0.5 block uppercase tracking-wider">تبديل مساحة العمل / البراند:</span>
+              
+              <!-- 1. Ahmed Shahin ADV Studio -->
+              <button type="button" onclick="switchToAdvWorkspace()" id="wsSwitcherAdvBtn" class="w-full text-right p-2.5 rounded-xl flex items-center justify-between hover:bg-neutral-800 transition group border border-brand-red/40 bg-brand-red/10 cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-neutral-950 border border-brand-red/40 flex items-center justify-center text-sm p-1">
+                    🖨️
+                  </div>
+                  <div>
+                    <span class="text-xs font-bold text-white block group-hover:text-brand-red transition">Ahmed Shahin ADV</span>
+                    <span class="text-[9px] text-neutral-400 block">استوديو الطباعة واللافتات والطلبات العامة</span>
+                  </div>
+                </div>
+                <i data-lucide="check" id="wsAdvCheckIcon" class="w-4 h-4 text-brand-red"></i>
+              </button>
 
-        <!-- Change Password Button (For Any Logged In User) -->
-        <button onclick="openChangePasswordModal()" class="bg-neutral-900 hover:bg-neutral-800 text-neutral-300 hover:text-white border border-neutral-800 px-2.5 py-1.5 rounded-xl text-xs font-medium flex items-center gap-1.5 transition" title="تعديل كلمة المرور الخاصة بي">
-          <i data-lucide="key" class="w-3.5 h-3.5 text-amber-400"></i>
-          <span class="hidden sm:inline">كلمة المرور</span>
-        </button>
+              <!-- 2. G.O.A.T Digital Designs Brand -->
+              <button type="button" onclick="switchToGoatWorkspace()" id="wsSwitcherGoatBtn" class="w-full text-right p-2.5 rounded-xl flex items-center justify-between hover:bg-amber-500/10 hover:border-amber-500/40 transition group border border-transparent cursor-pointer">
+                <div class="flex items-center gap-2.5">
+                  <div class="w-8 h-8 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-base">
+                    🐐
+                  </div>
+                  <div>
+                    <span class="text-xs font-black text-amber-300 block group-hover:text-amber-200 transition">G.O.A.T Brand</span>
+                    <span class="text-[9px] text-amber-400/80 block">التصاميم الرقمية والسوشيال ميديا ⚡</span>
+                  </div>
+                </div>
+                <div class="flex items-center gap-1.5">
+                  <span class="text-[9px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-1.5 py-0.5 rounded font-mono font-bold">SIUUU</span>
+                  <i data-lucide="check" id="wsGoatCheckIcon" class="w-4 h-4 text-amber-400 hidden"></i>
+                </div>
+              </button>
+            </div>
 
-        <!-- Profile Avatar & Role Tag (Click to edit display name) -->
-        <div onclick="promptEditMyName()" class="flex items-center gap-2 pr-2 border-r border-neutral-800 cursor-pointer hover:opacity-85 transition group" title="انقر لتعديل اسمك الشخصي">
-          <div class="w-8 h-8 rounded-full bg-brand-red/20 border border-brand-red flex items-center justify-center text-xs font-bold text-white group-hover:scale-105 transition" id="userAvatar">
-            أش
-          </div>
-          <div class="text-right hidden sm:block">
-            <span class="text-xs font-bold text-white block leading-tight flex items-center gap-1">
-              <span id="userNameLabel">أحمد شاهين</span>
-              <i data-lucide="pencil" class="w-2.5 h-2.5 text-neutral-400 group-hover:text-amber-400"></i>
-            </span>
-            <span class="text-[10px] text-brand-red font-semibold block leading-tight" id="userRoleBadge">المدير العام 👑</span>
+            <!-- Management & Settings Items -->
+            <div class="p-1.5 space-y-0.5">
+              <!-- Manage Users (Admin Only) -->
+              <button type="button" id="manageUsersBtn" onclick="openManageUsersModal(); closeProfileDropdown();" class="hidden w-full text-right px-3 py-2 rounded-xl text-xs font-bold text-amber-400 hover:text-amber-300 hover:bg-neutral-800 transition flex items-center gap-2.5 cursor-pointer">
+                <i data-lucide="users" class="w-4 h-4 text-amber-400"></i>
+                <span>إدارة المستخدمين وكلمات المرور</span>
+              </button>
+
+              <!-- Manage Designers Directory -->
+              <button type="button" onclick="openManageDesignersModal(); closeProfileDropdown();" class="w-full text-right px-3 py-2 rounded-xl text-xs font-bold text-purple-300 hover:text-white hover:bg-neutral-800 transition flex items-center gap-2.5 cursor-pointer">
+                <i data-lucide="palette" class="w-4 h-4 text-purple-400"></i>
+                <span>دليل وإدارة المصممين</span>
+              </button>
+
+              <!-- Change Password -->
+              <button type="button" onclick="openChangePasswordModal(); closeProfileDropdown();" class="w-full text-right px-3 py-2 rounded-xl text-xs font-medium text-neutral-300 hover:text-white hover:bg-neutral-800 transition flex items-center gap-2.5 cursor-pointer">
+                <i data-lucide="key" class="w-4 h-4 text-amber-400"></i>
+                <span>تعديل كلمة المرور</span>
+              </button>
+            </div>
+
+            <!-- Logout Item Inside Dropdown -->
+            <div class="p-1.5">
+              <button type="button" onclick="closeProfileDropdown(); logoutUser();" class="w-full text-right px-3 py-2 rounded-xl text-xs font-bold text-red-400 hover:text-white hover:bg-red-950/60 transition flex items-center gap-2.5 cursor-pointer">
+                <i data-lucide="log-out" class="w-4 h-4 text-red-400"></i>
+                <span>تسجيل الخروج من الحساب</span>
+              </button>
+            </div>
+
           </div>
         </div>
 
-        <!-- Logout Button -->
-        <button onclick="logoutUser()" class="bg-red-950/40 hover:bg-red-900/60 text-red-300 border border-red-800/60 px-2.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition" title="تسجيل الخروج">
-          <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
-          <span class="hidden sm:inline">خروج</span>
+        <!-- FIXED ICON-ONLY LOGOUT BUTTON (Never disappears, strictly icon only to save space!) -->
+        <button type="button" onclick="logoutUser()" class="flex-shrink-0 bg-red-950/50 hover:bg-red-600 text-red-300 hover:text-white border border-red-800/60 hover:border-red-500 p-2 sm:p-2.5 rounded-xl transition shadow-[0_0_12px_rgba(220,38,38,0.2)] cursor-pointer" title="تسجيل الخروج">
+          <i data-lucide="log-out" class="w-4 h-4"></i>
         </button>
       </div>
     </header>
@@ -453,7 +597,7 @@
     <main class="flex-1 flex overflow-hidden">
       
       <!-- VIEW 1: ORDERS / KANBAN BOARD -->
-      <div id="ordersView" class="flex-1 flex flex-col p-6 overflow-hidden">
+      <div id="ordersView" class="flex-1 flex flex-col p-3 sm:p-6 pb-24 lg:pb-6 overflow-hidden">
         
         <!-- Board Controls & Search -->
         <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
@@ -480,7 +624,7 @@
       </div>
 
       <!-- VIEW 2: CUSTOMERS DIRECTORY -->
-      <div id="customersView" class="hidden flex-1 p-6 overflow-y-auto">
+      <div id="customersView" class="hidden flex-1 p-3 sm:p-6 pb-24 lg:pb-6 overflow-y-auto">
         <div class="flex items-center justify-between mb-6">
           <div>
             <h2 class="text-xl font-bold">دليل العملاء وسجل المعاملات</h2>
@@ -489,8 +633,8 @@
         </div>
 
         <!-- Customers Table -->
-        <div class="glass-card rounded-2xl overflow-hidden border border-neutral-800">
-          <table class="w-full text-right text-sm">
+        <div class="glass-card rounded-2xl overflow-x-auto border border-neutral-800">
+          <table class="w-full text-right text-sm min-w-[550px]">
             <thead class="bg-neutral-900/80 text-neutral-400 text-xs border-b border-neutral-800">
               <tr>
                 <th class="p-4">اسم العميل</th>
@@ -508,7 +652,7 @@
       </div>
 
       <!-- VIEW 3: EXPENSES & PROFIT CALCULATOR (ADMIN ONLY) -->
-      <div id="expensesView" class="hidden flex-1 p-6 overflow-y-auto">
+      <div id="expensesView" class="hidden flex-1 p-3 sm:p-6 pb-24 lg:pb-6 overflow-y-auto">
         <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
           <div>
             <h2 class="text-xl font-bold flex items-center gap-2">
@@ -518,7 +662,7 @@
             <p class="text-xs text-neutral-400">حساب مصاريف الإعلانات الممولة، الطباعة، المصممين، ومرتبات المودريتورز وصافي الربح الحقيقي</p>
           </div>
           
-          <div class="flex items-center gap-2">
+          <div class="flex items-center gap-2 flex-wrap">
             <!-- Period Filter -->
             <select id="expensePeriodFilter" onchange="handleExpensePeriodChange()" class="bg-neutral-900 border border-neutral-800 rounded-xl px-3 py-2 text-xs font-bold text-neutral-200 focus:outline-none focus:border-brand-red">
               <option value="all">كل الفترات (الإجمالي العام)</option>
@@ -551,28 +695,28 @@
         </div>
 
         <!-- Financial Summary Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-          <div class="glass-card p-5 rounded-2xl border-r-4 border-r-blue-500">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
+          <div class="glass-card p-4 sm:p-5 rounded-2xl border-r-4 border-r-blue-500">
             <span class="text-xs text-neutral-400 block mb-1">إجمالي المبيعات (التحصيل)</span>
-            <div class="text-2xl font-black text-white" id="expTotalSales">0 <span class="text-xs font-normal text-blue-400">ج.م</span></div>
+            <div class="text-xl sm:text-2xl font-black text-white" id="expTotalSales">0 <span class="text-xs font-normal text-blue-400">ج.م</span></div>
             <span class="text-[10px] text-neutral-500 mt-2 block">إجمالي أسعار الأوردرات</span>
           </div>
 
-          <div class="glass-card p-5 rounded-2xl border-r-4 border-r-amber-500">
+          <div class="glass-card p-4 sm:p-5 rounded-2xl border-r-4 border-r-amber-500">
             <span class="text-xs text-neutral-400 block mb-1">تكلفة الطباعة والمصممين</span>
-            <div class="text-2xl font-black text-amber-400" id="expTotalOrderCosts">0 <span class="text-xs font-normal text-neutral-400">ج.م</span></div>
+            <div class="text-xl sm:text-2xl font-black text-amber-400" id="expTotalOrderCosts">0 <span class="text-xs font-normal text-neutral-400">ج.م</span></div>
             <span class="text-[10px] text-neutral-500 mt-2 block" id="expCostBreakdown">طباعة: 0 | تصميم: 0</span>
           </div>
 
-          <div class="glass-card p-5 rounded-2xl border-r-4 border-r-red-500">
-            <span class="text-xs text-neutral-400 block mb-1">المصاريف العامة (إعلانات + مرتبات)</span>
-            <div class="text-2xl font-black text-red-400" id="expTotalGeneral">0 <span class="text-xs font-normal text-neutral-400">ج.م</span></div>
+          <div class="glass-card p-4 sm:p-5 rounded-2xl border-r-4 border-r-red-500">
+            <span class="text-xs text-neutral-400 block mb-1">المصاريف العامة</span>
+            <div class="text-xl sm:text-2xl font-black text-red-400" id="expTotalGeneral">0 <span class="text-xs font-normal text-neutral-400">ج.م</span></div>
             <span class="text-[10px] text-neutral-500 mt-2 block" id="expAdsRoiIndicator">عائد الإعلانات (ROAS): 0x</span>
           </div>
 
-          <div class="glass-card p-5 rounded-2xl border-r-4 border-r-emerald-500 bg-emerald-950/10">
+          <div class="glass-card p-4 sm:p-5 rounded-2xl border-r-4 border-r-emerald-500 bg-emerald-950/10">
             <span class="text-xs text-emerald-400 font-bold block mb-1">صافي الربح الحقيقي للشركة</span>
-            <div class="text-3xl font-black text-emerald-400" id="expNetProfit">0 <span class="text-xs font-normal text-emerald-300">ج.م</span></div>
+            <div class="text-2xl sm:text-3xl font-black text-emerald-400" id="expNetProfit">0 <span class="text-xs font-normal text-emerald-300">ج.م</span></div>
             <span class="text-[10px] text-emerald-500 mt-2 block font-semibold" id="expProfitMargin">هامش الربح: 0%</span>
           </div>
         </div>
@@ -638,12 +782,17 @@
 
         <!-- Section 3: Designer Payouts & Ledger (مستحقات وحسابات المصممين) -->
         <div class="glass-card p-5 rounded-2xl">
-          <h3 class="text-sm font-bold mb-4 flex items-center justify-between">
+          <h3 class="text-sm font-bold mb-4 flex items-center justify-between flex-wrap gap-2">
             <span class="flex items-center gap-2">
               <i data-lucide="palette" class="w-4 h-4 text-purple-400"></i>
               كشف مستحقات وحسابات المصممين
             </span>
-            <span class="text-[11px] text-neutral-400 font-normal">تسجيل سداد فوري، تصفير وحذف الحسابات، والمحاسبة الفورية</span>
+            <div class="flex items-center gap-2">
+              <button type="button" onclick="openManualDesignerEntryModal('adv')" class="bg-purple-600/20 hover:bg-purple-600 text-purple-300 hover:text-white border border-purple-500/40 px-3 py-1.5 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-sm cursor-pointer" title="تسجيل أتعاب قديمة أو سداد نقدي يدوي للمصمم">
+                <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+                <span>+ تسجيل أتعاب / سداد يدوي قديم 📅</span>
+              </button>
+            </div>
           </h3>
           <div class="overflow-x-auto">
             <table class="w-full text-right text-xs">
@@ -667,8 +816,8 @@
       </div>
 
       <!-- VIEW 3.5: PRODUCTS & PRICING CATALOG (ADMIN & MODERATOR) -->
-      <div id="pricingView" class="hidden flex-1 p-6 overflow-y-auto">
-        <div class="flex items-center justify-between mb-6">
+      <div id="pricingView" class="hidden flex-1 p-3 sm:p-6 pb-24 lg:pb-6 overflow-y-auto">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
           <div>
             <h2 class="text-xl font-bold flex items-center gap-2">
               <i data-lucide="tags" class="w-6 h-6 text-amber-400"></i>
@@ -683,31 +832,31 @@
         </div>
 
         <!-- Products Grid / Cards -->
-        <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div id="productsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
           <!-- Dynamically populated via script -->
         </div>
       </div>
 
       <!-- VIEW 4: REPORTS VIEW -->
-      <div id="reportsView" class="hidden flex-1 p-6 overflow-y-auto">
+      <div id="reportsView" class="hidden flex-1 p-3 sm:p-6 pb-24 lg:pb-6 overflow-y-auto">
         <h2 class="text-xl font-bold mb-1">التقارير ومؤشرات الأداء</h2>
         <p class="text-xs text-neutral-400 mb-6">إحصائيات الإيرادات وسير الطلبات</p>
 
         <!-- KPI Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-          <div class="glass-card p-5 rounded-2xl border-r-4 border-r-brand-red">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 mb-6">
+          <div class="glass-card p-4 sm:p-5 rounded-2xl border-r-4 border-r-brand-red">
             <span class="text-xs text-neutral-400 block mb-1">إجمالي المبيعات</span>
-            <div class="text-2xl font-black text-white" id="kpiRevenue">0 <span class="text-xs font-normal text-brand-red">ج.م</span></div>
+            <div class="text-xl sm:text-2xl font-black text-white" id="kpiRevenue">0 <span class="text-xs font-normal text-brand-red">ج.م</span></div>
           </div>
 
-          <div class="glass-card p-5 rounded-2xl border-r-4 border-r-blue-500">
+          <div class="glass-card p-4 sm:p-5 rounded-2xl border-r-4 border-r-blue-500">
             <span class="text-xs text-neutral-400 block mb-1">الطلبات النشطة (قيد التنفيذ)</span>
-            <div class="text-2xl font-black text-white" id="kpiActiveOrders">0</div>
+            <div class="text-xl sm:text-2xl font-black text-white" id="kpiActiveOrders">0</div>
           </div>
 
-          <div class="glass-card p-5 rounded-2xl border-r-4 border-r-amber-500">
+          <div class="glass-card p-4 sm:p-5 rounded-2xl border-r-4 border-r-amber-500">
             <span class="text-xs text-neutral-400 block mb-1">مبالغ تحت التحصيل (متبقي)</span>
-            <div class="text-2xl font-black text-white" id="kpiPendingBalance">0 <span class="text-xs font-normal text-amber-500">ج.م</span></div>
+            <div class="text-xl sm:text-2xl font-black text-white" id="kpiPendingBalance">0 <span class="text-xs font-normal text-amber-500">ج.م</span></div>
           </div>
         </div>
 
@@ -722,12 +871,290 @@
         </div>
       </div>
 
+      <!-- VIEW 6: G.O.A.T DIGITAL DESIGN ARENA (CRISTIANO RONALDO LUXURY BRAND) -->
+      <div id="goatView" class="hidden flex-1 flex flex-col p-3 sm:p-6 pb-24 lg:pb-6 overflow-hidden">
+        
+        <!-- Header & Controls -->
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-5 border-b border-amber-500/20 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-500/20 via-yellow-500/10 to-amber-600/30 border border-amber-500/40 flex items-center justify-center text-2xl shadow-[0_0_25px_rgba(245,158,11,0.25)]">
+              🐐
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-xl font-black text-white tracking-wider bg-gradient-to-r from-amber-100 via-amber-300 to-yellow-500 bg-clip-text text-transparent">
+                  G.O.A.T • DIGITAL DESIGNS
+                </h2>
+                <span class="text-xs bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2.5 py-0.5 rounded-full font-mono font-black shadow-[0_0_10px_rgba(245,158,11,0.2)]">SIUUU ⚡</span>
+              </div>
+              <p class="text-xs text-neutral-400 font-medium">براند التصاميم الرقمية الحصري والسوشيال ميديا والثمبنيل واللوجوهات (بدون طباعة)</p>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-3">
+            <!-- Return to ADV Studio Button -->
+            <button type="button" onclick="switchToAdvWorkspace()" class="bg-neutral-900 hover:bg-neutral-800 text-neutral-200 hover:text-white border border-neutral-700 hover:border-brand-red/60 px-3.5 py-2 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-sm cursor-pointer" title="الرجوع إلى استوديو أحمد شاهين للطباعة">
+              <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red"></i>
+              <span>العودة إلى ADV ↩️</span>
+            </button>
+
+            <!-- Search & Actions -->
+            <div class="relative w-64 hidden sm:block">
+              <i data-lucide="search" class="w-4 h-4 absolute right-3 top-1/2 -translate-y-1/2 text-neutral-400"></i>
+              <input type="text" id="goatSearchInput" onkeyup="filterGoatOrders()" placeholder="بحث في تصاميم G.O.A.T..." class="w-full bg-neutral-900/90 border border-neutral-800 rounded-xl pr-9 pl-4 py-2 text-xs text-white placeholder-neutral-500 focus:outline-none focus:border-amber-400 transition">
+            </div>
+
+            <button id="goatOpenDrawerBtn" onclick="openGoatDrawer()" class="bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/40 px-3.5 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.15)]">
+              <i data-lucide="wallet" class="w-4 h-4 text-amber-400"></i>
+              <span>خزينة وحسابات شاهين 👑</span>
+            </button>
+
+            <button onclick="openNewGoatOrderModal()" class="bg-gradient-to-r from-amber-500 via-yellow-500 to-amber-600 hover:brightness-110 text-black px-4 py-2 rounded-xl text-xs font-black transition flex items-center gap-1.5 shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+              <i data-lucide="plus" class="w-4 h-4"></i>
+              <span>أوردر ديجيتال جديد 🐐</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Financial Stats Row (Strictly Visible To Ahmed Shahin 👑 - Hidden From Others) -->
+        <div id="goatAdminStatsRow" class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-5">
+          <div class="glass-card p-3.5 sm:p-4 rounded-2xl border-l-4 border-l-amber-500 bg-neutral-900/80">
+            <span class="text-[11px] text-neutral-400 font-bold block mb-1">إجمالي مبيعات G.O.A.T 🐐</span>
+            <div class="text-xl sm:text-2xl font-black font-mono text-white" id="goatStatRevenue">0 <span class="text-xs text-amber-400">ج.م</span></div>
+            <span class="text-[10px] text-amber-300/80 font-bold mt-1 block">تصاميم وسوشيال ميديا فقط</span>
+          </div>
+
+          <div class="glass-card p-3.5 sm:p-4 rounded-2xl border-l-4 border-l-yellow-500 bg-neutral-900/80">
+            <span class="text-[11px] text-neutral-400 font-bold block mb-1">المتبقي قيد التحصيل ⏳</span>
+            <div class="text-xl sm:text-2xl font-black font-mono text-amber-400" id="goatStatPending">0 <span class="text-xs text-neutral-400">ج.م</span></div>
+            <span class="text-[10px] text-neutral-500 mt-1 block">دفعات معلقة عند التسليم</span>
+          </div>
+
+          <div class="glass-card p-3.5 sm:p-4 rounded-2xl border-l-4 border-l-purple-500 bg-neutral-900/80">
+            <span class="text-[11px] text-neutral-400 font-bold block mb-1">مستحقات المصممين 🎨</span>
+            <div class="text-xl sm:text-2xl font-black font-mono text-purple-300" id="goatStatDesignerDues">0 <span class="text-xs text-neutral-400">ج.م</span></div>
+            <span class="text-[10px] text-purple-400/80 mt-1 block">كشوفات مصممي الديجيتال</span>
+          </div>
+
+          <div class="glass-card p-3.5 sm:p-4 rounded-2xl border-l-4 border-l-emerald-500 bg-gradient-to-br from-emerald-950/30 to-neutral-900/80">
+            <span class="text-[11px] text-emerald-300 font-bold block mb-1">صافي أرباح شاهين 👑</span>
+            <div class="text-xl sm:text-2xl font-black font-mono text-emerald-400" id="goatStatNetProfit">0 <span class="text-xs text-emerald-500">ج.م</span></div>
+            <span class="text-[10px] text-emerald-400 font-bold mt-1 block">🔒 محجوب تماماً عن أي موظف</span>
+          </div>
+        </div>
+
+        <!-- 6-Stage Dedicated Kanban Board -->
+        <div class="flex-1 overflow-x-auto pb-4">
+          <div class="flex gap-4 h-full min-h-[580px]" id="goatKanbanBoard">
+            <!-- Columns populated dynamically via script -->
+          </div>
+        </div>
+
+        <!-- G.O.A.T SLIDE-OVER DRAWER (خزينة وحسابات شاهين المستقلة 👑) -->
+        <div id="goatDrawerBackdrop" onclick="closeGoatDrawer()" class="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm hidden transition-opacity"></div>
+        
+        <div id="goatDrawer" class="fixed top-0 right-0 bottom-0 z-[65] w-full max-w-lg bg-[#0d0d12] border-l-2 border-amber-500/40 shadow-[-20px_0_50px_rgba(0,0,0,0.8)] transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+          
+          <!-- Drawer Header -->
+          <div class="p-5 border-b border-amber-500/20 bg-gradient-to-r from-amber-500/10 via-neutral-900 to-amber-600/10 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-xl shadow-[0_0_15px_rgba(245,158,11,0.3)]">
+                👑
+              </div>
+              <div>
+                <h3 class="text-base font-black text-white flex items-center gap-2">
+                  <span class="bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent">خزينة وحسابات G.O.A.T المستقلة</span>
+                  <span class="text-[9px] bg-amber-500/20 text-amber-300 border border-amber-500/40 px-2 py-0.5 rounded-full font-mono font-bold">شاهين فقط 🔒</span>
+                </h3>
+                <p class="text-[11px] text-neutral-400">دفتر حسابات مالي منفصل 100% عن استوديو الطباعة والشركاء</p>
+              </div>
+            </div>
+            <button onclick="closeGoatDrawer()" class="p-2 text-neutral-400 hover:text-white rounded-xl hover:bg-neutral-800 transition">
+              <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+          </div>
+
+          <!-- Drawer Navigation Tabs -->
+          <div class="p-3 bg-neutral-950/80 border-b border-neutral-800 flex items-center gap-2">
+            <button id="goatDrawerTabLedger" onclick="switchGoatDrawerTab('ledger')" class="flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.25)]">
+              <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+              <span>كشف حساب المصممين 🎨</span>
+            </button>
+            <button id="goatDrawerTabExpenses" onclick="switchGoatDrawerTab('expenses')" class="flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800">
+              <i data-lucide="receipt" class="w-3.5 h-3.5"></i>
+              <span>مصاريف الديجيتال 💸</span>
+            </button>
+          </div>
+
+          <!-- Drawer Body Content (Scrollable) -->
+          <div class="flex-1 overflow-y-auto p-5 space-y-5">
+            
+            <!-- Quick Summary KPI in Drawer -->
+            <div class="grid grid-cols-2 gap-3">
+              <div class="p-3.5 bg-neutral-950/90 rounded-2xl border border-amber-500/20">
+                <span class="text-[10px] text-neutral-400 font-bold block mb-1">صافي أرباح الديجيتال 👑</span>
+                <span id="drawerGoatNetProfit" class="text-xl font-black font-mono text-emerald-400">0 ج.م</span>
+              </div>
+              <div class="p-3.5 bg-neutral-950/90 rounded-2xl border border-amber-500/20">
+                <span class="text-[10px] text-neutral-400 font-bold block mb-1">المتبقي لمصممي G.O.A.T ⏳</span>
+                <span id="drawerGoatDesignerPending" class="text-xl font-black font-mono text-amber-400">0 ج.م</span>
+              </div>
+            </div>
+
+            <!-- SECTION 1: DESIGNERS LEDGER TAB -->
+            <div id="goatDrawerSectionLedger" class="space-y-3">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <h4 class="text-xs font-bold text-white flex items-center gap-1.5">
+                  <i data-lucide="users" class="w-4 h-4 text-purple-400"></i>
+                  <span>كشف مستحقات وسداد مصممي G.O.A.T</span>
+                </h4>
+                <button type="button" onclick="openManualDesignerEntryModal('goat')" class="bg-amber-500/20 hover:bg-amber-500 text-amber-300 hover:text-black border border-amber-500/40 px-2.5 py-1 rounded-lg text-[10px] font-bold transition flex items-center gap-1 cursor-pointer">
+                  <i data-lucide="plus-circle" class="w-3 h-3"></i>
+                  <span>+ تسجيل أتعاب/سداد يدوي 📅</span>
+                </button>
+              </div>
+
+              <div id="goatDesignersLedgerList" class="space-y-2.5">
+                <!-- Dynamically populated -->
+              </div>
+            </div>
+
+            <!-- SECTION 2: DIGITAL EXPENSES TAB -->
+            <div id="goatDrawerSectionExpenses" class="hidden space-y-4">
+              <!-- Add Expense Form -->
+              <div class="p-4 bg-neutral-950/90 rounded-2xl border border-amber-500/30 space-y-3">
+                <h4 class="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                  <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                  <span>تسجيل مصروف خاص ببراند G.O.A.T (أحمد شاهين فقط)</span>
+                </h4>
+                <div class="space-y-2">
+                  <input type="text" id="goatExpTitle" placeholder="بيان المصروف (اشتراك Midjourney، فونتات، إعلانات...)" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2 text-white text-xs focus:border-amber-400 focus:outline-none">
+                  <div class="grid grid-cols-2 gap-2">
+                    <input type="number" id="goatExpAmount" placeholder="المبلغ (ج.م)" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2 text-white text-xs font-mono focus:border-amber-400 focus:outline-none">
+                    <input type="date" id="goatExpDate" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2 text-white text-xs font-mono focus:border-amber-400 focus:outline-none" title="حدد تاريخ المصروف لتسجيل أي مصروف قديم">
+                  </div>
+                </div>
+                <button type="button" onclick="submitGoatExpense()" class="w-full bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 text-black py-2 rounded-xl text-xs font-black transition flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                  <i data-lucide="plus" class="w-4 h-4"></i>
+                  <span>إضافة المصروف لدفتر G.O.A.T</span>
+                </button>
+              </div>
+
+              <!-- Expenses List -->
+              <div class="space-y-2">
+                <h5 class="text-xs font-bold text-neutral-300">سجل المصاريف الخاصة:</h5>
+                <div id="goatExpensesList" class="space-y-2">
+                  <!-- Dynamically populated -->
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Drawer Footer -->
+          <div class="p-4 border-t border-neutral-800 bg-neutral-950/90 text-center">
+            <span class="text-[10px] text-amber-400/80 font-bold flex items-center justify-center gap-1.5">
+              <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i>
+              <span>دفتر حسابات وخزينة مستقلة تماماً لا تظهر لأي شريك أو موظف</span>
+            </span>
+          </div>
+
+        </div>
+
+        <!-- PAY GOAT DESIGNER MODAL -->
+        <div id="payGoatDesignerModal" class="fixed inset-0 z-[75] bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
+          <div class="glass-modal w-full max-w-sm rounded-2xl p-6 border-2 border-amber-500/40 shadow-2xl space-y-4 bg-[#0a0a0e]">
+            <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
+              <h3 class="text-sm font-bold text-white flex items-center gap-2">
+                <span class="text-lg">💵</span>
+                <span>سداد مستحقات مصمم G.O.A.T</span>
+              </h3>
+              <button onclick="closePayGoatDesignerModal()" class="text-neutral-400 hover:text-white">
+                <i data-lucide="x" class="w-4 h-4"></i>
+              </button>
+            </div>
+
+            <div class="space-y-3 text-xs">
+              <div>
+                <span class="text-neutral-400 block mb-1">اسم المصمم:</span>
+                <span id="payGoatDesignerName" class="font-bold text-white text-sm block"></span>
+              </div>
+              <div class="p-3 bg-neutral-950 rounded-xl border border-neutral-800 flex items-center justify-between">
+                <span class="text-neutral-400">المتبقي له في G.O.A.T:</span>
+                <span id="payGoatDesignerDue" class="font-bold font-mono text-amber-400 text-sm">0 ج.م</span>
+              </div>
+              <div>
+                <label class="block text-neutral-300 font-bold mb-1">المبلغ المراد سداده الآن (ج.م)</label>
+                <input type="number" id="payGoatAmountInput" placeholder="أدخل المبلغ" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white font-mono text-sm focus:border-amber-400 focus:outline-none">
+              </div>
+            </div>
+
+            <div class="flex gap-2 pt-2 border-t border-neutral-800">
+              <button type="button" onclick="closePayGoatDesignerModal()" class="flex-1 bg-neutral-900 text-neutral-300 py-2 rounded-xl text-xs font-bold">إلغاء</button>
+              <button type="button" onclick="confirmPayGoatDesigner()" class="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-600 hover:from-emerald-400 text-white py-2 rounded-xl text-xs font-bold transition shadow-[0_0_15px_rgba(16,185,129,0.3)]">تأكيد السداد 💵</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
     </main>
+
+    <!-- MOBILE & TABLET BOTTOM FLOATING NAVIGATION BAR (Visible on < 1024px) -->
+    <nav id="mobileBottomNav" class="mobile-bottom-nav lg:hidden">
+      <!-- 1. ADV Mobile Tabs -->
+      <div id="mobileNavAdvContainer" class="flex items-center justify-around w-full">
+        <button onclick="switchView('orders')" id="mobileNavOrders" class="mobile-nav-btn active">
+          <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+          <span>الطلبات</span>
+        </button>
+        <button onclick="switchView('customers')" id="mobileNavCustomers" class="mobile-nav-btn">
+          <i data-lucide="users" class="w-4 h-4"></i>
+          <span>العملاء</span>
+        </button>
+        <button onclick="switchView('pricing')" id="mobileNavPricing" class="mobile-nav-btn">
+          <i data-lucide="tags" class="w-4 h-4 text-amber-400"></i>
+          <span>الأسعار</span>
+        </button>
+        <button onclick="switchView('expenses')" id="mobileNavExpenses" class="mobile-nav-btn">
+          <i data-lucide="calculator" class="w-4 h-4 text-emerald-400"></i>
+          <span>الحسابات</span>
+        </button>
+        <button onclick="switchView('reports')" id="mobileNavReports" class="mobile-nav-btn">
+          <i data-lucide="bar-chart-3" class="w-4 h-4"></i>
+          <span>التقارير</span>
+        </button>
+      </div>
+
+      <!-- 2. G.O.A.T Mobile Tabs -->
+      <div id="mobileNavGoatContainer" class="hidden items-center justify-around w-full">
+        <button onclick="switchGoatTab('kanban')" id="mobileNavGoatKanban" class="mobile-nav-btn active text-amber-400">
+          <span class="text-sm">🐐</span>
+          <span class="font-bold text-[9px] text-amber-300">الكانبان</span>
+        </button>
+        <button onclick="switchGoatTab('treasury')" id="mobileNavGoatTreasury" class="mobile-nav-btn text-amber-400">
+          <i data-lucide="wallet" class="w-4 h-4 text-amber-400"></i>
+          <span class="text-[9px]">الخزينة</span>
+        </button>
+        <button onclick="switchGoatTab('expenses')" id="mobileNavGoatExpenses" class="mobile-nav-btn text-amber-400">
+          <i data-lucide="receipt" class="w-4 h-4 text-amber-400"></i>
+          <span class="text-[9px]">المصاريف</span>
+        </button>
+        <button onclick="switchGoatTab('designers')" id="mobileNavGoatDesigners" class="mobile-nav-btn text-purple-400">
+          <i data-lucide="palette" class="w-4 h-4 text-purple-400"></i>
+          <span class="text-[9px]">المصممين</span>
+        </button>
+        <button onclick="switchToAdvWorkspace()" class="mobile-nav-btn text-red-400">
+          <i data-lucide="arrow-right" class="w-4 h-4 text-brand-red"></i>
+          <span class="text-[9px]">العودة</span>
+        </button>
+      </div>
+    </nav>
   </div>
 
   <!-- 3. ORDER DETAILS MODAL -->
-  <div id="orderModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="glass-modal w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]">
+  <div id="orderModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-2.5 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-3xl rounded-2xl overflow-hidden shadow-2xl flex flex-col max-h-[92vh] sm:max-h-[90vh]">
       
       <!-- Modal Header -->
       <div class="p-5 border-b border-neutral-800 flex items-center justify-between bg-neutral-900/50">
@@ -999,8 +1426,8 @@
   </div>
 
   <!-- 4. NEW ORDER MODAL (FREEFORM INPUT & NO COST VISIBILITY FOR MODERATORS) -->
-  <div id="newOrderModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="glass-modal w-full max-w-lg rounded-2xl p-6 shadow-2xl space-y-4">
+  <div id="newOrderModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-lg rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 max-h-[92vh] flex flex-col overflow-y-auto">
       <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
         <h3 id="newOrderModalTitle" class="text-base font-bold text-white flex items-center gap-2">
           <i data-lucide="plus-circle" class="w-5 h-5 text-brand-red" id="newOrderModalIcon"></i>
@@ -1122,8 +1549,8 @@
   </div>
 
   <!-- 5. NEW EXPENSE MODAL (ADS / SALARIES / OVERHEAD) -->
-  <div id="newExpenseModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="glass-modal w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4">
+  <div id="newExpenseModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-md rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
         <h3 class="text-base font-bold text-white flex items-center gap-2">
           <i data-lucide="plus-circle" class="w-5 h-5 text-brand-red"></i>
@@ -1148,9 +1575,15 @@
             <option value="other">4. مصاريف أخرى (تشغيل ونثريات)</option>
           </select>
         </div>
-        <div>
-          <label class="block text-neutral-400 font-bold mb-1">المبلغ (ج.م)</label>
-          <input type="number" id="expAmountInput" placeholder="2500" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white focus:border-brand-red focus:outline-none">
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-neutral-400 font-bold mb-1">المبلغ (ج.م)</label>
+            <input type="number" id="expAmountInput" placeholder="2500" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white font-mono font-bold focus:border-brand-red focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-neutral-400 font-bold mb-1">تاريخ المصروف 📅</label>
+            <input type="date" id="expDateInput" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white font-mono text-xs focus:border-brand-red focus:outline-none" title="حدد أي تاريخ لتسجيل مصروف قديم">
+          </div>
         </div>
       </div>
 
@@ -1161,9 +1594,73 @@
     </div>
   </div>
 
+  <!-- 5.5 MANUAL DESIGNER ENTRY MODAL (HISTORICAL FEES & MANUAL PAYOUTS) -->
+  <div id="manualDesignerEntryModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-md rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 max-h-[92vh] overflow-y-auto border border-purple-500/40">
+      <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <i data-lucide="palette" class="w-5 h-5 text-purple-400"></i>
+          <span>تسجيل أتعاب / سداد يدوي لمصمم 📅</span>
+        </h3>
+        <button onclick="closeManualDesignerEntryModal()" class="text-neutral-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <div class="space-y-3 text-xs">
+        <div>
+          <label class="block text-neutral-400 font-bold mb-1">اسم المصمم</label>
+          <div class="space-y-1.5">
+            <select id="manualDesignerSelect" onchange="onManualDesignerSelectChange(this.value)" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white focus:border-purple-400 focus:outline-none">
+              <option value="">-- اختر من المصممين المسجلين أو اكتب اسماً جديداً بالأسفل --</option>
+            </select>
+            <input type="text" id="manualDesignerCustomName" placeholder="أو اكتب اسم المصمم هنا مباشرة..." class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white focus:border-purple-400 focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-neutral-400 font-bold mb-1">نوع الحركة المالية</label>
+          <select id="manualDesignerEntryType" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white focus:border-purple-400 focus:outline-none">
+            <option value="fee">🎨 أتعاب مستحقة للمصمم (إضافة رصيد مستحق له عن شغل قديم)</option>
+            <option value="payout">💵 سداد / دفعة نقدية مسددة (خصم من رصيد المصمم كدفعة مستلمة)</option>
+          </select>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-neutral-400 font-bold mb-1">المبلغ (ج.م)</label>
+            <input type="number" id="manualDesignerAmount" placeholder="مثال: 500" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white font-mono font-bold text-sm focus:border-purple-400 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-neutral-400 font-bold mb-1">التاريخ 📅</label>
+            <input type="date" id="manualDesignerDate" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white font-mono text-xs focus:border-purple-400 focus:outline-none">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-neutral-400 font-bold mb-1">مساحة العمل / البراند</label>
+          <select id="manualDesignerWorkspace" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white focus:border-purple-400 focus:outline-none">
+            <option value="adv">استوديو أحمد شاهين للطباعة (ADV)</option>
+            <option value="goat">براند G.O.A.T الديجيتال والسوشيال ميديا 🐐</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-neutral-400 font-bold mb-1">بيان وتفاصيل العملية</label>
+          <input type="text" id="manualDesignerNotes" placeholder="مثال: أتعاب تصميم هوية قديمة لشهر أغسطس، تسليم كاش..." class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white focus:border-purple-400 focus:outline-none">
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-2 pt-3 border-t border-neutral-800">
+        <button onclick="closeManualDesignerEntryModal()" class="px-4 py-2 bg-neutral-800 text-white rounded-xl text-xs font-bold">إلغاء</button>
+        <button onclick="submitManualDesignerEntry()" class="px-5 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-xs font-bold transition shadow-[0_0_15px_rgba(168,85,247,0.3)]">حفظ الحركة المالية ✅</button>
+      </div>
+    </div>
+  </div>
+
   <!-- 6. NEW PRODUCT / SERVICE MODAL (ADMIN ONLY) -->
-  <div id="newProductModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="glass-modal w-full max-w-lg rounded-2xl p-6 shadow-2xl space-y-4">
+  <div id="newProductModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-lg rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 max-h-[92vh] flex flex-col overflow-y-auto">
       <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
         <h3 class="text-base font-bold text-white flex items-center gap-2">
           <i data-lucide="plus-circle" class="w-5 h-5 text-amber-400"></i>
@@ -1248,8 +1745,8 @@
   </div>
 
   <!-- 6.5 CHANGE PASSWORD MODAL (FOR ANY LOGGED-IN USER) -->
-  <div id="changePasswordModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="glass-modal w-full max-w-sm rounded-2xl p-6 shadow-2xl space-y-4">
+  <div id="changePasswordModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-sm rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
         <h3 class="text-sm font-bold text-white flex items-center gap-2">
           <i data-lucide="key" class="w-4 h-4 text-amber-400"></i>
@@ -1308,8 +1805,8 @@
   </div>
 
   <!-- 7. MANAGE USERS MODAL (SUPER ADMIN AHMED SHAHIN ONLY) -->
-  <div id="manageUsersModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="glass-modal w-full max-w-lg rounded-2xl p-6 shadow-2xl space-y-4 max-h-[90vh] overflow-y-auto">
+  <div id="manageUsersModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-lg rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 max-h-[90vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
         <div>
           <h3 class="text-base font-bold text-white flex items-center gap-2">
@@ -1398,8 +1895,8 @@
   </div>
 
   <!-- 7.5 EDIT USER MODAL (DEDICATED MODAL FOR CHANGING USERNAME, NAME, PASSWORD, ROLE) -->
-  <div id="editUserModal" class="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="glass-modal w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4">
+  <div id="editUserModal" class="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-md rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
         <h3 class="text-base font-bold text-white flex items-center gap-2">
           <i data-lucide="user-cog" class="w-5 h-5 text-blue-400"></i>
@@ -1443,6 +1940,18 @@
           </select>
         </div>
 
+        <!-- Exclusive G.O.A.T Module Permission Toggle (Ahmed Shahin Only) -->
+        <div id="editUserGoatAccessGroup" class="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-between">
+          <div>
+            <label for="editUserGoatAccessCheckbox" class="text-xs font-bold text-amber-300 flex items-center gap-1.5 cursor-pointer">
+              <span>🐐</span>
+              <span>إتاحة الوصول لمديول G.O.A.T</span>
+            </label>
+            <span class="text-[10px] text-neutral-400 block mt-0.5">يُحجب عنه الأرباح والماليات تلقائياً ليرى التنفيذ فقط 🔒</span>
+          </div>
+          <input type="checkbox" id="editUserGoatAccessCheckbox" class="w-4 h-4 rounded accent-amber-500 cursor-pointer">
+        </div>
+
         <div id="editUserErrorMsg" class="hidden p-2.5 bg-red-950/70 border border-red-800 rounded-xl text-red-300 text-[11px] font-bold text-center">
         </div>
       </div>
@@ -1464,8 +1973,8 @@
   </div>
 
   <!-- 7.6 PAY DESIGNER MODAL (PARTIAL OR FULL PAYMENT) -->
-  <div id="payDesignerModal" class="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="glass-modal w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4">
+  <div id="payDesignerModal" class="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-md rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 max-h-[92vh] overflow-y-auto">
       <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
         <h3 class="text-base font-bold text-white flex items-center gap-2">
           <i data-lucide="banknote" class="w-5 h-5 text-emerald-400"></i>
@@ -1526,8 +2035,8 @@
   </div>
 
   <!-- 7.7 MANAGE DESIGNERS DIRECTORY MODAL (VISIBLE TO ALL USERS) -->
-  <div id="manageDesignersModal" class="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="glass-modal w-full max-w-md rounded-2xl p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
+  <div id="manageDesignersModal" class="fixed inset-0 z-[60] bg-black/85 backdrop-blur-md hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-md rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 max-h-[90vh] flex flex-col">
       <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
         <h3 class="text-base font-bold text-white flex items-center gap-2">
           <i data-lucide="palette" class="w-5 h-5 text-purple-400"></i>
@@ -1578,54 +2087,134 @@
     </div>
   </div>
 
-  <!-- INSTALL PWA MODAL (FOR MOBILE & DESKTOP) -->
-  <div id="installPwaModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden items-center justify-center p-4">
-    <div class="glass-modal w-full max-w-sm rounded-3xl p-6 border border-brand-red/40 shadow-2xl space-y-4 text-center">
-      <div class="w-16 h-16 mx-auto rounded-2xl bg-neutral-950 border border-brand-red/50 flex items-center justify-center p-2 shadow-[0_0_25px_rgba(200,16,46,0.4)]">
-        <img class="app-logo-img max-w-full max-h-full object-contain" src="logo.svg" onerror="handleLogoError(this)" alt="Ahmed Shahin ADV">
+  <!-- G.O.A.T SECURITY PASSCODE MODAL (521985) -->
+  <div id="goatPasscodeModal" class="fixed inset-0 z-[70] bg-black/90 backdrop-blur-xl hidden items-center justify-center p-4">
+    <div class="glass-modal w-full max-w-sm rounded-3xl p-6 border-2 border-amber-500/40 shadow-[0_0_50px_rgba(245,158,11,0.25)] text-center space-y-5 bg-[#0a0a0e]">
+      <div class="w-16 h-16 mx-auto rounded-2xl bg-amber-500/10 border border-amber-500/40 flex items-center justify-center text-3xl shadow-[0_0_20px_rgba(245,158,11,0.3)]">
+        🐐
       </div>
       <div>
-        <h3 class="text-base font-black text-white">تثبيت تطبيق Ahmed Shahin ADV</h3>
-        <p class="text-xs text-neutral-400 mt-1">تثبيت لوحة التحكم كتطبيق مستقل وسريع على هاتفك أو جهازك</p>
+        <h3 class="text-xl font-black text-white tracking-wide bg-gradient-to-r from-amber-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent">G.O.A.T • ARENA ACCESS</h3>
+        <p class="text-xs text-neutral-400 mt-1">المنطقة الحصرية لأحمد شاهين 👑 • يرجى إدخال رمز الأمان</p>
       </div>
 
-      <!-- Android / PC Notice -->
-      <div id="generalInstallGuide" class="bg-neutral-900/90 border border-neutral-800 rounded-2xl p-3.5 text-right space-y-2 text-xs text-neutral-300">
-        <p class="font-bold text-white flex items-center gap-1.5">
-          <i data-lucide="check-circle" class="w-4 h-4 text-emerald-400"></i>
-          <span>مميزات تثبيت التطبيق:</span>
-        </p>
-        <ul class="space-y-1 list-disc list-inside text-neutral-400 text-[11px]">
-          <li>يفتح فوراً من شاشة هاتفك مثل تطبيقات Play Store و App Store.</li>
-          <li>سرعة تصفح فائقة وعمل بدون إنترنت (Offline Caching).</li>
-          <li>شاشة كاملة بدون أشرطة المتصفح المزعجة.</li>
-        </ul>
-      </div>
-
-      <!-- iOS Instructions -->
-      <div id="iosInstallGuide" class="hidden bg-neutral-900/90 border border-neutral-800 rounded-2xl p-4 text-right space-y-2.5 text-xs text-neutral-300">
-        <p class="font-bold text-amber-400 flex items-center gap-1.5">
-          <i data-lucide="smartphone" class="w-4 h-4"></i>
-          <span>📱 لمستخدمي آيفون (Safari):</span>
-        </p>
-        <div class="flex items-start gap-2">
-          <span class="w-5 h-5 rounded-full bg-brand-red/20 text-brand-red flex items-center justify-center text-xs font-bold flex-shrink-0">1</span>
-          <span>اضغط على زر المشاركة (Share) <i data-lucide="share" class="w-3.5 h-3.5 inline text-blue-400"></i> أسفل شاشة Safari.</span>
-        </div>
-        <div class="flex items-start gap-2">
-          <span class="w-5 h-5 rounded-full bg-brand-red/20 text-brand-red flex items-center justify-center text-xs font-bold flex-shrink-0">2</span>
-          <span>مرر للأسفل واختر <strong>«إضافة إلى الشاشة الرئيسية»</strong> (Add to Home Screen) 📲.</span>
+      <div class="space-y-3">
+        <input type="password" id="goatPinInput" maxlength="6" placeholder="••••••" class="w-full text-center text-2xl font-mono tracking-[0.5em] bg-neutral-950 border-2 border-neutral-800 focus:border-amber-400 rounded-2xl py-3 text-white focus:outline-none transition shadow-inner">
+        <p id="goatPinError" class="text-xs text-red-400 hidden font-bold">رمز الأمان غير صحيح! الوصول محمي لأحمد شاهين.</p>
+        <div class="flex items-center justify-center gap-1.5 text-[11px] text-neutral-500">
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-amber-400"></i>
+          <span>منطقة براند مستقلة ومشفرة 100%</span>
         </div>
       </div>
 
-      <div class="flex items-center justify-center gap-2 pt-2">
-        <button type="button" onclick="closeInstallPwaModal()" class="w-full py-2.5 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 rounded-xl text-xs font-bold transition">إلغاء</button>
-        <button type="button" id="confirmInstallBtn" onclick="executePwaInstall()" class="w-full py-2.5 bg-brand-red hover:bg-brand-hoverRed text-white rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 shadow-[0_0_15px_rgba(200,16,46,0.4)]">
-          <i data-lucide="download" class="w-3.5 h-3.5"></i>
-          <span>تثبيت الآن</span>
-        </button>
+      <div class="flex gap-2">
+        <button type="button" onclick="closeGoatPasscodeModal()" class="flex-1 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 py-2.5 rounded-xl text-xs font-bold transition">إلغاء</button>
+        <button type="button" onclick="submitGoatPasscode()" class="flex-1 bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black py-2.5 rounded-xl font-black text-xs transition shadow-[0_0_20px_rgba(245,158,11,0.3)]">دخول الساحة (SIUUU ⚡)</button>
       </div>
     </div>
+  </div>
+
+  <!-- G.O.A.T DIGITAL ORDER MODAL (ADD / EDIT) -->
+  <div id="goatOrderModal" class="fixed inset-0 z-[65] bg-black/85 backdrop-blur-md hidden items-center justify-center p-3 sm:p-4 overflow-y-auto">
+    <div class="glass-modal w-full max-w-lg rounded-2xl p-4 sm:p-6 shadow-2xl space-y-3 sm:space-y-4 max-h-[92vh] flex flex-col border border-amber-500/30">
+      <div class="flex items-center justify-between border-b border-neutral-800 pb-3">
+        <h3 class="text-base font-bold text-white flex items-center gap-2">
+          <span class="text-lg">🐐</span>
+          <span id="goatOrderModalTitle" class="bg-gradient-to-r from-amber-200 to-yellow-400 bg-clip-text text-transparent font-black">تسجيل أوردر تصميم ديجيتال جديد</span>
+        </h3>
+        <button onclick="closeGoatOrderModal()" class="text-neutral-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form id="goatOrderForm" onsubmit="event.preventDefault(); submitGoatOrder();" class="space-y-3.5 text-xs overflow-y-auto flex-1 pr-1">
+        <input type="hidden" id="goatEditingOrderId">
+
+        <!-- Customer Info -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-neutral-300 font-bold mb-1">اسم العميل</label>
+            <input type="text" id="goatCustName" required placeholder="مثال: د. محمد سامي" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white focus:border-amber-400 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-neutral-300 font-bold mb-1">رقم الواتساب</label>
+            <input type="text" id="goatCustPhone" required placeholder="01xxxxxxxxx" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white font-mono focus:border-amber-400 focus:outline-none">
+          </div>
+        </div>
+
+        <!-- Quick Package Select + Free Typing Description -->
+        <div class="p-3 bg-neutral-950/70 rounded-xl border border-neutral-800/80 space-y-2">
+          <label class="block text-amber-400 font-bold text-[11px] flex items-center gap-1.5">
+            <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+            اختيار باقة رقمية سريعة (أو اكتب حراً بالأسفل)
+          </label>
+          <select id="goatQuickPackageSelect" onchange="onSelectGoatPackage(this.value)" class="w-full bg-neutral-900 border border-neutral-800 rounded-lg p-2 text-white text-xs focus:border-amber-400 focus:outline-none">
+            <option value="">-- اختياري: اختر من الباقات الجاهزة --</option>
+            <option value="pkg_logo" data-price="2500" data-cost="700">🎨 تصميم لوجو وهوية براند تجاري كاملة (2,500 ج)</option>
+            <option value="pkg_posts30" data-price="4500" data-cost="1500">📱 باقة 30 بوست سوشيال ميديا شهري (4,500 ج)</option>
+            <option value="pkg_posts15" data-price="2500" data-cost="900">📱 باقة 15 بوست سوشيال ميديا (2,500 ج)</option>
+            <option value="pkg_thumb3" data-price="600" data-cost="200">🎬 تصميم 3 صور مصغرة يوتيوب احترافية (600 ج)</option>
+            <option value="pkg_cover" data-price="800" data-cost="250">🖼️ غلاف بروفايل فيسبوك ولينكدإن احترافي (800 ج)</option>
+            <option value="pkg_catalog" data-price="3000" data-cost="1000">📄 تصميم كتالوج رقمي PDF تفاعلي (3,000 ج)</option>
+          </select>
+
+          <div>
+            <label class="block text-neutral-300 font-bold mb-1">نوع التصميم والمواصفات المطلوبة (كتابة حرة)</label>
+            <input type="text" id="goatOrderType" required placeholder="مثال: تصميم 5 بوستات انستجرام + غلاف فيسبوك" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white focus:border-amber-400 focus:outline-none">
+          </div>
+        </div>
+
+        <!-- Financials -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-neutral-300 font-bold mb-1">السعر الإجمالي للعميل (ج.م)</label>
+            <input type="number" id="goatTotalAmount" required placeholder="1500" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white font-mono focus:border-amber-400 focus:outline-none">
+          </div>
+          <div>
+            <label class="block text-neutral-300 font-bold mb-1">العربون المدفوع (ج.م)</label>
+            <input type="number" id="goatDepositAmount" placeholder="500" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white font-mono focus:border-amber-400 focus:outline-none">
+          </div>
+        </div>
+
+        <!-- Assigned Designer & Designer Cost (Cost Only Visible To Ahmed Shahin 👑) -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-purple-400 font-bold mb-1">المصمم المكلف</label>
+            <select id="goatDesignerSelect" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white focus:border-purple-400 focus:outline-none">
+              <!-- Dynamically populated from savedDesigners -->
+            </select>
+          </div>
+          <div id="goatDesignerCostGroup">
+            <label class="block text-amber-300 font-bold mb-1 flex items-center justify-between">
+              <span>تكلفة المصمم (ج.م)</span>
+              <span class="text-[9px] text-neutral-400">خاصة بشاهين 👑</span>
+            </label>
+            <input type="number" id="goatDesignerCost" placeholder="300" class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2.5 text-white font-mono focus:border-amber-400 focus:outline-none">
+          </div>
+        </div>
+
+        <!-- Notes & Urgent Flag -->
+        <div>
+          <label class="block text-neutral-300 font-bold mb-1">ملاحظات وروابط المواد (درايف / لوجو سابق / توجيهات)</label>
+          <textarea id="goatOrderNotes" rows="2" placeholder="ألوان البراند، تفاصيل النص، التعديلات المطلوبة..." class="w-full bg-neutral-900 border border-neutral-800 rounded-xl p-2 text-white focus:border-amber-400 focus:outline-none text-xs"></textarea>
+        </div>
+
+        <div class="flex items-center gap-2 pt-1">
+          <input type="checkbox" id="goatOrderUrgent" class="w-4 h-4 rounded accent-red-600 cursor-pointer">
+          <label for="goatOrderUrgent" class="text-red-400 font-bold cursor-pointer text-xs">تصميم مستعجل وتسليم فوري 🔥</label>
+        </div>
+
+        <div class="flex items-center justify-end gap-2 pt-3 border-t border-neutral-800">
+          <button type="button" onclick="closeGoatOrderModal()" class="px-4 py-2 bg-neutral-800 text-neutral-300 rounded-xl font-bold">إلغاء</button>
+          <button type="submit" class="bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 text-black px-6 py-2 rounded-xl font-black transition flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.25)]">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            <span id="goatOrderSubmitBtnText">حفظ أوردر G.O.A.T</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   </div>
 
   <!-- MAIN SCRIPT (STATE & LOGIC) -->
@@ -1964,6 +2553,7 @@
     }));
     let generalExpenses = JSON.parse(localStorage.getItem('shahin_expenses_v3')) || defaultGeneralExpenses;
     let savedDesigners = JSON.parse(localStorage.getItem('shahin_saved_designers_v1')) || defaultSavedDesigners;
+    let designerManualEntries = JSON.parse(localStorage.getItem('shahin_designer_manual_entries_v1')) || [];
 
     let storedProducts = JSON.parse(localStorage.getItem('shahin_products_v4'));
     if (!storedProducts || !Array.isArray(storedProducts) || storedProducts.length === 0) {
@@ -2082,6 +2672,11 @@
             supabaseClient.from('crm_settings').upsert({
               key: 'saved_designers',
               value: JSON.stringify(savedDesigners),
+              updated_at: new Date().toISOString()
+            }, { onConflict: 'key' }),
+            supabaseClient.from('crm_settings').upsert({
+              key: 'designer_manual_entries',
+              value: JSON.stringify(designerManualEntries),
               updated_at: new Date().toISOString()
             }, { onConflict: 'key' })
           ]);
@@ -2217,6 +2812,14 @@
               if (typeof renderDesignersList === 'function') renderDesignersList();
             } catch(e) {}
           }
+          const manualDesRow = settingsRes.data.find(s => s.key === 'designer_manual_entries');
+          if (manualDesRow && manualDesRow.value) {
+            try {
+              designerManualEntries = JSON.parse(manualDesRow.value);
+              localStorage.setItem('shahin_designer_manual_entries_v1', JSON.stringify(designerManualEntries));
+              hasUpdates = true;
+            } catch(e) {}
+          }
         } else {
           applyStoredLogo();
         }
@@ -2250,143 +2853,71 @@
       }
     }
 
+    // --- 1.15 SUPABASE REALTIME REPLICATION ENGINE (POSTGRES_CHANGES) ---
+    let realtimeChannel = null;
+    let realtimeReconnectTimer = null;
+
     function initSupabaseRealtime() {
       if (!supabaseClient) return;
 
+      // Clean up previous channel subscription if any to prevent duplicate listeners
+      if (realtimeChannel) {
+        try {
+          supabaseClient.removeChannel(realtimeChannel);
+        } catch (e) {
+          console.warn('Realtime channel cleanup:', e);
+        }
+        realtimeChannel = null;
+      }
+
       try {
-        supabaseClient
-          .channel('crm_realtime_channel')
+        realtimeChannel = supabaseClient
+          .channel('shahin_crm_live_sync')
+          // 1. Realtime Orders (crm_orders)
           .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_orders' }, payload => {
-            if (payload.eventType === 'INSERT') {
-              const newOrd = {
-                ...payload.new,
-                id: Number(payload.new.id),
-                status: normalizeOrderStatus(payload.new.status),
-                total_amount: Number(payload.new.total_amount) || 0,
-                deposit_amount: Number(payload.new.deposit_amount) || 0,
-                balance_due: Number(payload.new.balance_due) || 0,
-                print_cost: Number(payload.new.print_cost) || 0,
-                designer_cost: Number(payload.new.designer_cost) || 0,
-                designer_paid_amount: Number(payload.new.designer_paid_amount) || 0,
-                extra_fees: Number(payload.new.extra_fees) || 0,
-                is_urgent: !!payload.new.is_urgent,
-                designer_paid: !!payload.new.designer_paid
-              };
-              if (!orders.some(o => o.id === newOrd.id)) {
-                orders.unshift(newOrd);
-              }
-            } else if (payload.eventType === 'UPDATE') {
-              const idx = orders.findIndex(o => o.id === Number(payload.new.id));
-              if (idx !== -1) {
-                orders[idx] = {
-                  ...orders[idx],
-                  ...payload.new,
-                  id: Number(payload.new.id),
-                  status: normalizeOrderStatus(payload.new.status),
-                  total_amount: Number(payload.new.total_amount) || 0,
-                  deposit_amount: Number(payload.new.deposit_amount) || 0,
-                  balance_due: Number(payload.new.balance_due) || 0,
-                  print_cost: Number(payload.new.print_cost) || 0,
-                  designer_cost: Number(payload.new.designer_cost) || 0,
-                  designer_paid_amount: Number(payload.new.designer_paid_amount) || 0,
-                  extra_fees: Number(payload.new.extra_fees) || 0,
-                  is_urgent: !!payload.new.is_urgent,
-                  designer_paid: !!payload.new.designer_paid
-                };
-              }
-            } else if (payload.eventType === 'DELETE') {
-              orders = orders.filter(o => o.id !== Number(payload.old.id));
-            }
-            localStorage.setItem('shahin_orders_v3', JSON.stringify(orders));
-            renderKanban();
-            renderExpensesAndProfit();
-            renderReports();
+            console.log('⚡ Realtime crm_orders update received:', payload);
+            handleRealtimeOrdersChange(payload);
           })
-          .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_users' }, payload => {
-            if (payload.eventType === 'INSERT') {
-              const uObj = {
-                id: payload.new.id,
-                username: payload.new.username || payload.new.id,
-                password: payload.new.password || '123',
-                name: payload.new.name,
-                role: payload.new.role,
-                canManageUsers: (payload.new.role === 'super_admin') || !!payload.new.can_manage_users,
-                avatar: payload.new.avatar || payload.new.name.slice(0, 2)
-              };
-              if (!users.some(u => u.id === uObj.id)) {
-                users.push(uObj);
-              }
-            } else if (payload.eventType === 'UPDATE') {
-              const idx = users.findIndex(u => u.id === payload.new.id);
-              const uObj = {
-                id: payload.new.id,
-                username: payload.new.username || payload.new.id,
-                password: payload.new.password || '123',
-                name: payload.new.name,
-                role: payload.new.role,
-                canManageUsers: (payload.new.role === 'super_admin') || !!payload.new.can_manage_users,
-                avatar: payload.new.avatar || payload.new.name.slice(0, 2)
-              };
-              if (idx !== -1) {
-                users[idx] = { ...users[idx], ...uObj };
-              }
-              if (currentUser && currentUser.id === payload.new.id) {
-                currentUser = { ...currentUser, ...uObj };
-                applyUserPermissions();
-              }
-            } else if (payload.eventType === 'DELETE') {
-              users = users.filter(u => u.id !== payload.old.id);
-            }
-            localStorage.setItem('shahin_users_v4', JSON.stringify(users));
-            renderQuickLoginChips();
-            if (currentUser && currentUser.canManageUsers && typeof renderUsersList === 'function') {
-              renderUsersList();
-            }
+          // Fallback listener for 'orders' table if present
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'orders' }, payload => {
+            console.log('⚡ Realtime orders table update received:', payload);
+            handleRealtimeOrdersChange(payload);
           })
+          // 2. Realtime Customers (crm_customers)
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_customers' }, payload => {
+            console.log('⚡ Realtime crm_customers update received:', payload);
+            handleRealtimeCustomersChange(payload);
+          })
+          // 3. Realtime Products & Pricing (crm_products)
           .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_products' }, payload => {
-            if (payload.eventType === 'INSERT') {
-              if (!products.some(p => p.id === payload.new.id)) products.unshift(payload.new);
-            } else if (payload.eventType === 'UPDATE') {
-              const idx = products.findIndex(p => p.id === payload.new.id);
-              if (idx !== -1) products[idx] = { ...products[idx], ...payload.new };
-            } else if (payload.eventType === 'DELETE') {
-              products = products.filter(p => p.id !== payload.old.id);
-            }
-            localStorage.setItem('shahin_products_v4', JSON.stringify(products));
-            renderProductsGrid();
-            populateProductSelectDropdown();
+            console.log('⚡ Realtime crm_products update received:', payload);
+            handleRealtimeProductsChange(payload);
           })
+          // 4. Realtime Expenses & Accounting (crm_expenses)
           .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_expenses' }, payload => {
-            if (payload.eventType === 'INSERT') {
-              if (!generalExpenses.some(e => e.id === payload.new.id)) generalExpenses.unshift(payload.new);
-            } else if (payload.eventType === 'UPDATE') {
-              const idx = generalExpenses.findIndex(e => e.id === payload.new.id);
-              if (idx !== -1) generalExpenses[idx] = { ...generalExpenses[idx], ...payload.new };
-            } else if (payload.eventType === 'DELETE') {
-              generalExpenses = generalExpenses.filter(e => e.id !== payload.old.id);
-            }
-            localStorage.setItem('shahin_expenses_v3', JSON.stringify(generalExpenses));
-            renderExpensesAndProfit();
+            console.log('⚡ Realtime crm_expenses update received:', payload);
+            handleRealtimeExpensesChange(payload);
           })
+          // 5. Realtime Users & Passwords (crm_users)
+          .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_users' }, payload => {
+            console.log('⚡ Realtime crm_users update received:', payload);
+            handleRealtimeUsersChange(payload);
+          })
+          // 6. Realtime Settings & Designers (crm_settings)
           .on('postgres_changes', { event: '*', schema: 'public', table: 'crm_settings' }, payload => {
-            if (payload.eventType === 'INSERT' || payload.eventType === 'UPDATE') {
-              if (payload.new && payload.new.key === 'logo' && payload.new.value) {
-                localStorage.setItem('shahin_custom_logo', payload.new.value);
-                applyStoredLogo();
-              }
-              if (payload.new && payload.new.key === 'saved_designers' && payload.new.value) {
-                try {
-                  savedDesigners = JSON.parse(payload.new.value);
-                  localStorage.setItem('shahin_saved_designers_v1', JSON.stringify(savedDesigners));
-                  populateSavedDesignersDropdowns();
-                  if (typeof renderDesignersList === 'function') renderDesignersList();
-                } catch(e) {}
-              }
-            }
+            console.log('⚡ Realtime crm_settings update received:', payload);
+            handleRealtimeSettingsChange(payload);
           })
-          .subscribe(status => {
+          .subscribe((status, err) => {
+            console.log('📡 Supabase Realtime Subscription Status:', status, err || '');
             if (status === 'SUBSCRIBED') {
-              updateCloudSyncBadge('connected', 'مباشر متصل ⚡');
+              updateCloudSyncBadge('connected', 'مباشر متصل ⚡ (لحظي)');
+            } else if (status === 'CHANNEL_ERROR' || status === 'TIMED_OUT' || status === 'CLOSED') {
+              updateCloudSyncBadge('offline', 'جاري إعادة الاتصال اللحظي... 🔄');
+              clearTimeout(realtimeReconnectTimer);
+              realtimeReconnectTimer = setTimeout(() => {
+                initSupabaseRealtime();
+              }, 3000);
             }
           });
       } catch (err) {
@@ -2394,11 +2925,289 @@
       }
     }
 
+    // Helper: Sanitize order row from Supabase
+    function parseOrderRow(row) {
+      if (!row) return null;
+      return {
+        id: Number(row.id),
+        order_number: String(row.order_number || `#${row.id}`),
+        customer_name: String(row.customer_name || ''),
+        customer_phone: String(row.customer_phone || ''),
+        order_type: String(row.order_type || ''),
+        status: normalizeOrderStatus(row.status),
+        created_by: String(row.created_by || ''),
+        designer: String(row.designer || ''),
+        designer_phone: String(row.designer_phone || ''),
+        total_amount: Number(row.total_amount) || 0,
+        deposit_amount: Number(row.deposit_amount) || 0,
+        balance_due: Number(row.balance_due) || 0,
+        print_cost: Number(row.print_cost) || 0,
+        designer_cost: Number(row.designer_cost) || 0,
+        designer_paid: !!row.designer_paid,
+        designer_paid_amount: Number(row.designer_paid_amount) || 0,
+        extra_fees: Number(row.extra_fees) || 0,
+        is_urgent: !!row.is_urgent,
+        deadline: String(row.deadline || ''),
+        shipping_company: String(row.shipping_company || ''),
+        tracking_number: String(row.tracking_number || ''),
+        shipping_address: String(row.shipping_address || ''),
+        design_notes: String(row.design_notes || ''),
+        created_date: String(row.created_date || (row.created_at ? row.created_at.split('T')[0] : '')),
+        completion_date: row.completion_date ? String(row.completion_date) : null
+      };
+    }
+
+    // Handler 1: Realtime Orders Change
+    function handleRealtimeOrdersChange(payload) {
+      const { eventType, new: newRow, old: oldRow } = payload;
+
+      if (eventType === 'INSERT') {
+        const newOrd = parseOrderRow(newRow);
+        if (!newOrd || !newOrd.id) return;
+        const idx = orders.findIndex(o => o.id === newOrd.id);
+        if (idx !== -1) {
+          orders[idx] = { ...orders[idx], ...newOrd };
+        } else {
+          orders.unshift(newOrd);
+        }
+      } else if (eventType === 'UPDATE') {
+        const updOrd = parseOrderRow(newRow);
+        if (!updOrd || !updOrd.id) return;
+        const idx = orders.findIndex(o => o.id === updOrd.id);
+        if (idx !== -1) {
+          orders[idx] = { ...orders[idx], ...updOrd };
+        } else {
+          orders.unshift(updOrd);
+        }
+
+        // Live update active order modal if currently opened
+        if (selectedOrder && selectedOrder.id === updOrd.id) {
+          selectedOrder = orders.find(o => o.id === updOrd.id) || updOrd;
+          const modal = document.getElementById('orderModal');
+          if (modal && !modal.classList.contains('hidden')) {
+            openOrderModal(selectedOrder.id);
+          }
+        }
+      } else if (eventType === 'DELETE') {
+        const targetId = Number(oldRow?.id || newRow?.id);
+        if (targetId) {
+          orders = orders.filter(o => o.id !== targetId);
+          if (selectedOrder && selectedOrder.id === targetId) {
+            closeOrderModal();
+          }
+        }
+      }
+
+      localStorage.setItem('shahin_orders_v3', JSON.stringify(orders));
+      renderKanban();
+      renderExpensesAndProfit();
+      renderReports();
+      flashLiveIndicator();
+    }
+
+    // Handler 2: Realtime Customers Change
+    function handleRealtimeCustomersChange(payload) {
+      const { eventType, new: newRow, old: oldRow } = payload;
+
+      if (eventType === 'INSERT' || eventType === 'UPDATE') {
+        if (!newRow) return;
+        const custObj = {
+          id: String(newRow.id),
+          name: String(newRow.name || ''),
+          phone: String(newRow.phone || ''),
+          totalSpent: Number(newRow.total_spent) || 0,
+          ordersCount: Number(newRow.orders_count) || 0,
+          lastOrderDate: String(newRow.last_order_date || '')
+        };
+        const idx = customers.findIndex(c => String(c.id) === custObj.id || (c.phone && c.phone === custObj.phone));
+        if (idx !== -1) {
+          customers[idx] = { ...customers[idx], ...custObj };
+        } else {
+          customers.unshift(custObj);
+        }
+      } else if (eventType === 'DELETE') {
+        const targetId = String(oldRow?.id || newRow?.id || '');
+        if (targetId) {
+          customers = customers.filter(c => String(c.id) !== targetId);
+        }
+      }
+
+      localStorage.setItem('shahin_customers_v3', JSON.stringify(customers));
+      renderCustomers();
+      flashLiveIndicator();
+    }
+
+    // Handler 3: Realtime Products Change
+    function handleRealtimeProductsChange(payload) {
+      const { eventType, new: newRow, old: oldRow } = payload;
+
+      if (eventType === 'INSERT' || eventType === 'UPDATE') {
+        if (!newRow) return;
+        const prodObj = {
+          ...newRow,
+          id: String(newRow.id),
+          name: String(newRow.name || ''),
+          type: String(newRow.type || 'print'),
+          unit_cost: Number(newRow.unit_cost) || 0,
+          design_cost: Number(newRow.design_cost) || 0,
+          selling_price: Number(newRow.selling_price) || 0,
+          tiers: Array.isArray(newRow.tiers) ? newRow.tiers : (typeof newRow.tiers === 'string' ? JSON.parse(newRow.tiers || '[]') : []),
+          description: String(newRow.description || ''),
+          ready_post: String(newRow.ready_post || ''),
+          post_created_by: String(newRow.post_created_by || ''),
+          post_updated_by: String(newRow.post_updated_by || ''),
+          post_updated_at: String(newRow.post_updated_at || '')
+        };
+        const idx = products.findIndex(p => String(p.id) === prodObj.id);
+        if (idx !== -1) {
+          products[idx] = { ...products[idx], ...prodObj };
+        } else {
+          products.unshift(prodObj);
+        }
+      } else if (eventType === 'DELETE') {
+        const targetId = String(oldRow?.id || newRow?.id || '');
+        if (targetId) {
+          products = products.filter(p => String(p.id) !== targetId);
+        }
+      }
+
+      localStorage.setItem('shahin_products_v4', JSON.stringify(products));
+      localStorage.setItem('shahin_products_v3', JSON.stringify(products));
+      renderProductsGrid();
+      populateProductSelectDropdown();
+      flashLiveIndicator();
+    }
+
+    // Handler 4: Realtime Expenses Change
+    function handleRealtimeExpensesChange(payload) {
+      const { eventType, new: newRow, old: oldRow } = payload;
+
+      if (eventType === 'INSERT' || eventType === 'UPDATE') {
+        if (!newRow) return;
+        const expObj = {
+          id: String(newRow.id),
+          title: String(newRow.title || ''),
+          category: String(newRow.category || 'other'),
+          amount: Number(newRow.amount) || 0,
+          date: String(newRow.date || '')
+        };
+        const idx = generalExpenses.findIndex(e => String(e.id) === expObj.id);
+        if (idx !== -1) {
+          generalExpenses[idx] = { ...generalExpenses[idx], ...expObj };
+        } else {
+          generalExpenses.unshift(expObj);
+        }
+      } else if (eventType === 'DELETE') {
+        const targetId = String(oldRow?.id || newRow?.id || '');
+        if (targetId) {
+          generalExpenses = generalExpenses.filter(e => String(e.id) !== targetId);
+        }
+      }
+
+      localStorage.setItem('shahin_expenses_v3', JSON.stringify(generalExpenses));
+      renderExpensesAndProfit();
+      flashLiveIndicator();
+    }
+
+    // Handler 5: Realtime Users Change
+    function handleRealtimeUsersChange(payload) {
+      const { eventType, new: newRow, old: oldRow } = payload;
+
+      if (eventType === 'INSERT' || eventType === 'UPDATE') {
+        if (!newRow) return;
+        const userObj = {
+          id: String(newRow.id),
+          username: String(newRow.username || newRow.id).trim().toLowerCase(),
+          password: String(newRow.password || '123'),
+          name: String(newRow.name || ''),
+          role: String(newRow.role || 'moderator'),
+          canManageUsers: (newRow.role === 'super_admin') || !!newRow.can_manage_users,
+          avatar: String(newRow.avatar || (newRow.name ? newRow.name.slice(0, 2) : 'ش'))
+        };
+        const idx = users.findIndex(u => String(u.id) === userObj.id);
+        if (idx !== -1) {
+          users[idx] = { ...users[idx], ...userObj };
+        } else {
+          users.push(userObj);
+        }
+
+        // Keep current session in sync if modified
+        if (currentUser && currentUser.id === userObj.id) {
+          currentUser = { ...currentUser, ...userObj };
+          applyUserPermissions();
+        }
+      } else if (eventType === 'DELETE') {
+        const targetId = String(oldRow?.id || newRow?.id || '');
+        if (targetId) {
+          users = users.filter(u => String(u.id) !== targetId);
+          if (currentUser && currentUser.id === targetId) {
+            alert('تم حذف حسابك من قبل الإدارة.');
+            logoutUser();
+          }
+        }
+      }
+
+      localStorage.setItem('shahin_users_v4', JSON.stringify(users));
+      localStorage.setItem('shahin_users_v3', JSON.stringify(users));
+      renderQuickLoginChips();
+      if (currentUser && currentUser.canManageUsers && typeof renderUsersList === 'function') {
+        renderUsersList();
+      }
+      flashLiveIndicator();
+    }
+
+    // Handler 6: Realtime Settings & Designers Change
+    function handleRealtimeSettingsChange(payload) {
+      const { eventType, new: newRow } = payload;
+
+      if (eventType === 'INSERT' || eventType === 'UPDATE') {
+        if (!newRow) return;
+        if (newRow.key === 'logo' && newRow.value) {
+          localStorage.setItem('shahin_custom_logo', newRow.value);
+          applyStoredLogo();
+        }
+        if (newRow.key === 'saved_designers' && newRow.value) {
+          try {
+            savedDesigners = JSON.parse(newRow.value);
+            localStorage.setItem('shahin_saved_designers_v1', JSON.stringify(savedDesigners));
+            populateSavedDesignersDropdowns();
+            if (typeof renderDesignersList === 'function') renderDesignersList();
+          } catch (e) {
+            console.error('Parse realtime designers error:', e);
+          }
+        }
+        if (newRow.key === 'designer_manual_entries' && newRow.value) {
+          try {
+            designerManualEntries = JSON.parse(newRow.value);
+            localStorage.setItem('shahin_designer_manual_entries_v1', JSON.stringify(designerManualEntries));
+            renderExpensesAndProfit();
+            renderGoatKanban();
+          } catch (e) {
+            console.error('Parse realtime manual entries error:', e);
+          }
+        }
+      }
+      flashLiveIndicator();
+    }
+
+    // Visual Flash for Live Updates
+    let flashTimer = null;
+    function flashLiveIndicator() {
+      const badge = document.getElementById('cloudSyncStatusBadge');
+      if (!badge) return;
+      clearTimeout(flashTimer);
+      badge.classList.add('ring-2', 'ring-emerald-400');
+      flashTimer = setTimeout(() => {
+        badge.classList.remove('ring-2', 'ring-emerald-400');
+      }, 1200);
+    }
+
     function saveState() {
       localStorage.setItem('shahin_customers_v3', JSON.stringify(customers));
       localStorage.setItem('shahin_orders_v3', JSON.stringify(orders));
       localStorage.setItem('shahin_expenses_v3', JSON.stringify(generalExpenses));
       localStorage.setItem('shahin_saved_designers_v1', JSON.stringify(savedDesigners));
+      localStorage.setItem('shahin_designer_manual_entries_v1', JSON.stringify(designerManualEntries));
       localStorage.setItem('shahin_products_v4', JSON.stringify(products));
       localStorage.setItem('shahin_products_v3', JSON.stringify(products));
       localStorage.setItem('shahin_users_v4', JSON.stringify(users));
@@ -2516,6 +3325,22 @@
           initAuth();
         }
       }, 1500);
+    });
+
+    // Automatic Realtime Reconnection & Background Resume Sync
+    window.addEventListener('online', () => {
+      console.log('🌐 Network online detected: Re-syncing & restarting Realtime listeners...');
+      syncFromSupabase();
+      initSupabaseRealtime();
+    });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'visible') {
+        syncFromSupabase();
+        if (!realtimeChannel) {
+          initSupabaseRealtime();
+        }
+      }
     });
 
     // --- 1.6 AUTH & LOGIN SCREEN ENGINE (ZERO OVERHEAD & ULTRA-CLEAN MINIMAL) ---
@@ -2810,8 +3635,103 @@
         }
       }
 
+      // Synchronize mobile bottom bar permissions
+      const mobExp = document.getElementById('mobileNavExpenses');
+      const mobRep = document.getElementById('mobileNavReports');
+      if (mobExp) {
+        if (isAnyAdmin) mobExp.classList.remove('hidden');
+        else mobExp.classList.add('hidden');
+      }
+      if (mobRep) {
+        if (isAnyAdmin) mobRep.classList.remove('hidden');
+        else mobRep.classList.add('hidden');
+      }
+
+      // Exclusive G.O.A.T Module Permission Check
+      const navGoat = document.getElementById('navGoat');
+      const mobGoat = document.getElementById('mobileNavGoat');
+      const canAccessGoat = currentUser && (currentUser.id === 'ahmed_shahin' || !!currentUser.canAccessGoat);
+      if (navGoat) {
+        if (canAccessGoat) {
+          navGoat.classList.remove('hidden');
+        } else {
+          navGoat.classList.add('hidden');
+          // If restricted user was currently viewing G.O.A.T view, bounce back to orders
+          const goatView = document.getElementById('goatView');
+          if (goatView && !goatView.classList.contains('hidden')) {
+            switchView('orders');
+          }
+        }
+      }
+      if (mobGoat) {
+        if (canAccessGoat) mobGoat.classList.remove('hidden');
+        else mobGoat.classList.add('hidden');
+      }
+
+      // Update Dropdown Profile Card
+      const dropdownAvatar = document.getElementById('dropdownAvatar');
+      if (dropdownAvatar) dropdownAvatar.innerText = currentUser.avatar || currentUser.name.slice(0, 2);
+
+      const dropdownUserName = document.getElementById('dropdownUserName');
+      if (dropdownUserName) dropdownUserName.innerText = currentUser.name;
+
+      const dropdownUserRole = document.getElementById('dropdownUserRole');
+      if (dropdownUserRole) {
+        dropdownUserRole.innerText = currentUser.role === 'super_admin' ? 'المدير العام 👑' :
+                                      currentUser.role === 'admin' ? 'مدير تنفيذي 💼' : 'مودريتور 🎨';
+      }
+
+      // Hide G.O.A.T switcher in dropdown if not permitted
+      const wsSwitcherGoatBtn = document.getElementById('wsSwitcherGoatBtn');
+      if (wsSwitcherGoatBtn) {
+        if (canAccessGoat) wsSwitcherGoatBtn.classList.remove('hidden');
+        else wsSwitcherGoatBtn.classList.add('hidden');
+      }
+
       renderKanban();
       lucide.createIcons();
+    }
+
+    // --- 3.1 PROFILE DROPDOWN & WORKSPACE SWITCHER CONTROLS ---
+    function toggleProfileDropdown(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('userProfileDropdownMenu');
+      const icon = document.getElementById('profileChevronIcon');
+      if (!menu) return;
+      const isHidden = menu.classList.contains('hidden');
+      if (isHidden) {
+        menu.classList.remove('hidden');
+        if (icon) icon.classList.add('rotate-180');
+      } else {
+        menu.classList.add('hidden');
+        if (icon) icon.classList.remove('rotate-180');
+      }
+      lucide.createIcons();
+    }
+
+    function closeProfileDropdown() {
+      const menu = document.getElementById('userProfileDropdownMenu');
+      const icon = document.getElementById('profileChevronIcon');
+      if (menu) menu.classList.add('hidden');
+      if (icon) icon.classList.remove('rotate-180');
+    }
+
+    // Close profile dropdown on click outside
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('profileDropdownContainer');
+      if (container && !container.contains(e.target)) {
+        closeProfileDropdown();
+      }
+    });
+
+    function switchToAdvWorkspace() {
+      closeProfileDropdown();
+      switchView('orders');
+    }
+
+    function switchToGoatWorkspace() {
+      closeProfileDropdown();
+      tryOpenGoatModule();
     }
 
     // --- 3.2 EDIT CURRENT USER DISPLAY NAME (FOR ANY USER) ---
@@ -3037,6 +3957,18 @@
         }
       }
 
+      const goatAccessGroup = document.getElementById('editUserGoatAccessGroup');
+      const goatAccessCheck = document.getElementById('editUserGoatAccessCheckbox');
+      if (goatAccessGroup && goatAccessCheck) {
+        if (currentUser && currentUser.id === 'ahmed_shahin') {
+          goatAccessGroup.classList.remove('hidden');
+          goatAccessCheck.checked = (u.id === 'ahmed_shahin') ? true : !!u.canAccessGoat;
+          goatAccessCheck.disabled = (u.id === 'ahmed_shahin'); // Ahmed Shahin always has access
+        } else {
+          goatAccessGroup.classList.add('hidden');
+        }
+      }
+
       const err = document.getElementById('editUserErrorMsg');
       if (err) err.classList.add('hidden');
 
@@ -3107,6 +4039,14 @@
         u.role = roleSelect.value;
       }
 
+      // Save G.O.A.T Access permission (Ahmed Shahin has authority to toggle for other users)
+      if (currentUser && currentUser.id === 'ahmed_shahin') {
+        const goatAccessCheck = document.getElementById('editUserGoatAccessCheckbox');
+        if (goatAccessCheck) {
+          u.canAccessGoat = (u.id === 'ahmed_shahin') ? true : goatAccessCheck.checked;
+        }
+      }
+
       // If current logged-in user was modified
       if (currentUser.id === u.id) {
         currentUser.name = u.name;
@@ -3114,6 +4054,7 @@
         currentUser.username = u.username;
         currentUser.password = u.password;
         if (u.role) currentUser.role = u.role;
+        if (typeof u.canAccessGoat !== 'undefined') currentUser.canAccessGoat = u.canAccessGoat;
         applyUserPermissions();
       }
 
@@ -4005,6 +4946,32 @@
           }
         });
 
+        // Incorporate manual historical entries (fees & payouts) for ADV workspace
+        designerManualEntries.filter(m => !m.workspace || m.workspace === 'adv').forEach(m => {
+          const dName = (m.designer && m.designer.trim()) ? m.designer.trim() : null;
+          if (!dName) return;
+
+          if (!designerGroups[dName]) {
+            designerGroups[dName] = {
+              name: dName,
+              phone: '',
+              ordersCount: 0,
+              totalFees: 0,
+              paidFees: 0,
+              unpaidFees: 0
+            };
+          }
+
+          const amt = Number(m.amount) || 0;
+          if (m.type === 'fee') {
+            designerGroups[dName].totalFees += amt;
+            designerGroups[dName].unpaidFees += amt;
+          } else if (m.type === 'payout') {
+            designerGroups[dName].paidFees += amt;
+            designerGroups[dName].unpaidFees = Math.max(0, designerGroups[dName].unpaidFees - amt);
+          }
+        });
+
         const designerList = Object.values(designerGroups);
         ledgerTbody.innerHTML = designerList.length === 0 ? `<tr><td colspan="6" class="p-6 text-center text-neutral-500 font-bold">لا توجد بيانات مصممين مسجلة حتى الآن</td></tr>` :
           designerList.map(d => `
@@ -4072,6 +5039,16 @@
           ? o.designer_paid_amount 
           : (o.designer_paid ? fee : 0);
         totalPaid += paidOnOrder;
+      });
+
+      // Incorporate manual entries for this designer in ADV
+      designerManualEntries.filter(m => (!m.workspace || m.workspace === 'adv') && m.designer === designerName).forEach(m => {
+        const amt = Number(m.amount) || 0;
+        if (m.type === 'fee') {
+          totalFees += amt;
+        } else if (m.type === 'payout') {
+          totalPaid += amt;
+        }
       });
 
       const remaining = Math.max(0, totalFees - totalPaid);
@@ -4188,15 +5165,18 @@
       const title = document.getElementById('expTitleInput').value.trim();
       const cat = document.getElementById('expCategoryInput').value;
       const amt = parseFloat(document.getElementById('expAmountInput').value) || 0;
+      const customDate = document.getElementById('expDateInput') ? document.getElementById('expDateInput').value : '';
 
       if (!title || amt <= 0) return alert('يرجى إدخال تفاصيل المصروف والمبلغ');
+
+      const expDate = customDate ? customDate : new Date().toISOString().split('T')[0];
 
       const newExp = {
         id: 'e_' + Date.now(),
         title: title,
         category: cat,
         amount: amt,
-        date: new Date().toISOString().split('T')[0]
+        date: expDate
       };
 
       generalExpenses.unshift(newExp);
@@ -4214,7 +5194,8 @@
       closeNewExpenseModal();
       document.getElementById('expTitleInput').value = '';
       document.getElementById('expAmountInput').value = '';
-      alert('تم تسجيل المصروف وتحديث صافي الأرباح بنجاح!');
+      if (document.getElementById('expDateInput')) document.getElementById('expDateInput').value = '';
+      alert(`تم تسجيل المصروف (${amt.toLocaleString()} ج.م) بتاريخ (${expDate}) وتحديث الحسابات بنجاح!`);
     }
 
     function deleteExpense(expId) {
@@ -4436,14 +5417,23 @@
 
     function populateSavedDesignersDropdowns() {
       const select = document.getElementById('quickDesignerSelect');
-      if (!select) return;
+      if (select) {
+        const currentVal = select.value;
+        select.innerHTML = '<option value="">-- اختياري: اختر من المصممين المسجلين --</option>' +
+          savedDesigners.map(d => `<option value="${d.id}">${d.name} ${d.phone ? `(${d.phone})` : ''}</option>`).join('');
 
-      const currentVal = select.value;
-      select.innerHTML = '<option value="">-- اختياري: اختر من المصممين المسجلين --</option>' +
-        savedDesigners.map(d => `<option value="${d.id}">${d.name} ${d.phone ? `(${d.phone})` : ''}</option>`).join('');
+        if (currentVal && savedDesigners.some(d => d.id === currentVal)) {
+          select.value = currentVal;
+        }
+      }
 
-      if (currentVal && savedDesigners.some(d => d.id === currentVal)) {
-        select.value = currentVal;
+      // Populate G.O.A.T Designer Dropdown
+      const goatSelect = document.getElementById('goatDesignerSelect');
+      if (goatSelect) {
+        const currentVal = goatSelect.value;
+        goatSelect.innerHTML = '<option value="">-- اختياري: اختر المصمم المكلف --</option>' +
+          savedDesigners.map(d => `<option value="${d.name}" data-phone="${d.phone || ''}">${d.name} ${d.phone ? `(${d.phone})` : ''}</option>`).join('');
+        if (currentVal) goatSelect.value = currentVal;
       }
     }
 
@@ -5192,7 +6182,13 @@
         viewName = 'orders';
       }
 
-      ['ordersView', 'customersView', 'pricingView', 'expensesView', 'reportsView'].forEach(id => {
+      // Check G.O.A.T permissions
+      const canAccessGoat = currentUser && (currentUser.id === 'ahmed_shahin' || !!currentUser.canAccessGoat);
+      if (viewName === 'goat' && !canAccessGoat) {
+        viewName = 'orders';
+      }
+
+      ['ordersView', 'customersView', 'pricingView', 'expensesView', 'reportsView', 'goatView'].forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
       });
@@ -5217,6 +6213,44 @@
         }
       });
 
+      // Update mobile bottom nav items
+      const mobileNavItems = [
+        { id: 'mobileNavOrders', view: 'orders' },
+        { id: 'mobileNavCustomers', view: 'customers' },
+        { id: 'mobileNavPricing', view: 'pricing' },
+        { id: 'mobileNavExpenses', view: 'expenses' },
+        { id: 'mobileNavReports', view: 'reports' }
+      ];
+
+      mobileNavItems.forEach(item => {
+        const btn = document.getElementById(item.id);
+        if (!btn) return;
+        btn.classList.remove('active');
+        if (item.view === viewName) {
+          btn.classList.add('active');
+        }
+      });
+
+      // Mobile G.O.A.T Nav Item Active State
+      const mobileGoatBtn = document.getElementById('mobileNavGoat');
+      if (mobileGoatBtn) {
+        if (viewName === 'goat') {
+          mobileGoatBtn.classList.add('goat-active');
+        } else {
+          mobileGoatBtn.classList.remove('goat-active');
+        }
+      }
+
+      // G.O.A.T Nav Item Luxury Glow Active State
+      const goatBtn = document.getElementById('navGoat');
+      if (goatBtn) {
+        if (viewName === 'goat') {
+          goatBtn.classList.add('border-amber-400', 'bg-amber-500/30', 'text-white', 'shadow-[0_0_25px_rgba(245,158,11,0.4)]');
+        } else {
+          goatBtn.classList.remove('border-amber-400', 'bg-amber-500/30', 'shadow-[0_0_25px_rgba(245,158,11,0.4)]');
+        }
+      }
+
       const activeEl = document.getElementById(`${viewName}View`);
       if (activeEl) activeEl.classList.remove('hidden');
 
@@ -5225,6 +6259,70 @@
       else if (viewName === 'reports') renderReports();
       else if (viewName === 'customers') renderCustomers();
       else if (viewName === 'orders') renderKanban();
+      else if (viewName === 'goat') renderGoatKanban();
+
+      // Synchronize Brand / Workspace Header & Dropdown Indicators & Nav Containers
+      const navAdv = document.getElementById('navAdvTabsContainer');
+      const navGoat = document.getElementById('navGoatTabsContainer');
+      const mobAdv = document.getElementById('mobileNavAdvContainer');
+      const mobGoat = document.getElementById('mobileNavGoatContainer');
+      const headerNewBtn = document.getElementById('headerNewOrderBtn');
+      const headerNewText = document.getElementById('headerNewOrderText');
+
+      const wsAdvBtn = document.getElementById('wsSwitcherAdvBtn');
+      const wsGoatBtn = document.getElementById('wsSwitcherGoatBtn');
+      const wsAdvCheck = document.getElementById('wsAdvCheckIcon');
+      const wsGoatCheck = document.getElementById('wsGoatCheckIcon');
+      const headerSub = document.getElementById('headerWorkspaceSubtitle');
+      const headerTitle = document.getElementById('headerWorkspaceTitle');
+
+      if (viewName === 'goat') {
+        // Show G.O.A.T navigation tabs, hide ADV printing navigation tabs
+        if (navAdv) { navAdv.classList.add('hidden'); navAdv.classList.remove('flex', 'lg:flex'); }
+        if (navGoat) { navGoat.classList.remove('hidden'); navGoat.classList.add('flex'); }
+        if (mobAdv) { mobAdv.classList.add('hidden'); mobAdv.classList.remove('flex'); }
+        if (mobGoat) { mobGoat.classList.remove('hidden'); mobGoat.classList.add('flex'); }
+
+        // Golden G.O.A.T New Order button
+        if (headerNewBtn) {
+          headerNewBtn.className = 'bg-gradient-to-r from-amber-500 to-yellow-500 hover:from-amber-400 hover:to-yellow-400 text-black px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs font-black flex items-center gap-1.5 shadow-[0_0_15px_rgba(245,158,11,0.35)] transition flex-shrink-0 cursor-pointer';
+        }
+        if (headerNewText) headerNewText.innerText = 'أوردر ديجيتال 🐐';
+
+        if (headerSub) headerSub.innerText = 'براند الديجيتال والسوشيال ميديا ⚡';
+        if (headerTitle) headerTitle.innerHTML = 'G.O.A.T • <span class="text-amber-400 font-black">BRAND 🐐</span>';
+        if (wsAdvCheck) wsAdvCheck.classList.add('hidden');
+        if (wsGoatCheck) wsGoatCheck.classList.remove('hidden');
+        if (wsAdvBtn) {
+          wsAdvBtn.className = 'w-full text-right p-2.5 rounded-xl flex items-center justify-between hover:bg-neutral-800 transition group border border-transparent cursor-pointer';
+        }
+        if (wsGoatBtn) {
+          wsGoatBtn.className = 'w-full text-right p-2.5 rounded-xl flex items-center justify-between transition group border border-amber-500/40 bg-amber-500/10 cursor-pointer';
+        }
+      } else {
+        // Show ADV printing navigation tabs, hide G.O.A.T navigation tabs
+        if (navAdv) { navAdv.classList.remove('hidden'); navAdv.classList.add('lg:flex'); }
+        if (navGoat) { navGoat.classList.add('hidden'); navGoat.classList.remove('flex'); }
+        if (mobAdv) { mobAdv.classList.remove('hidden'); mobAdv.classList.add('flex'); }
+        if (mobGoat) { mobGoat.classList.add('hidden'); mobGoat.classList.remove('flex'); }
+
+        // Standard Brand Red New Order button
+        if (headerNewBtn) {
+          headerNewBtn.className = 'bg-brand-red hover:bg-brand-hoverRed text-white px-2.5 sm:px-3.5 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-[0_0_15px_rgba(200,16,46,0.3)] transition flex-shrink-0 cursor-pointer';
+        }
+        if (headerNewText) headerNewText.innerText = 'أوردر جديد';
+
+        if (headerSub) headerSub.innerText = 'لوحة التحكم المركزية';
+        if (headerTitle) headerTitle.innerHTML = 'Ahmed Shahin <span class="text-brand-red">ADV</span>';
+        if (wsAdvCheck) wsAdvCheck.classList.remove('hidden');
+        if (wsGoatCheck) wsGoatCheck.classList.add('hidden');
+        if (wsAdvBtn) {
+          wsAdvBtn.className = 'w-full text-right p-2.5 rounded-xl flex items-center justify-between transition group border border-brand-red/40 bg-brand-red/10 cursor-pointer';
+        }
+        if (wsGoatBtn) {
+          wsGoatBtn.className = 'w-full text-right p-2.5 rounded-xl flex items-center justify-between hover:bg-amber-500/10 hover:border-amber-500/40 transition group border border-transparent cursor-pointer';
+        }
+      }
 
       applyUserPermissions();
       lucide.createIcons();
@@ -5574,6 +6672,1076 @@
           : "filter-btn px-3 py-1.5 rounded-lg text-xs font-medium text-neutral-400 hover:text-white";
       });
       renderKanban();
+    }
+
+    // =========================================================================
+    // --- 13. G.O.A.T DIGITAL DESIGNS ARENA (CRISTIANO RONALDO ELITE BRAND 🐐⚡) ---
+    // =========================================================================
+
+    const GOAT_STAGES = [
+      { id: 'goat_waiting_deposit', title: 'في انتظار دفع العربون', color: 'border-yellow-500', badge: 'bg-yellow-950 text-yellow-300' },
+      { id: 'goat_deposit_paid', title: 'تم دفع العربون', color: 'border-amber-500', badge: 'bg-amber-950 text-amber-300' },
+      { id: 'goat_in_design', title: 'قيد التصميم', color: 'border-purple-500', badge: 'bg-purple-950 text-purple-300' },
+      { id: 'goat_client_review', title: 'مراجعة العميل / التعديل', color: 'border-blue-500', badge: 'bg-blue-950 text-blue-300' },
+      { id: 'goat_approved_pending_balance', title: 'معتمد / بانتظار المتبقي', color: 'border-orange-500', badge: 'bg-orange-950 text-orange-300' },
+      { id: 'goat_completed', title: 'تم التسليم والتحصيل بالكامل', color: 'border-emerald-500', badge: 'bg-emerald-950 text-emerald-300' }
+    ];
+
+    const defaultGoatOrders = [
+      {
+        id: 1001,
+        order_number: '#G-1001',
+        customer_name: 'د. طارق المنشاوي',
+        customer_phone: '01099881122',
+        order_type: 'تصميم لوجو وهوية بصرية كاملة لعيادة أسنان',
+        status: 'goat_in_design',
+        created_by: 'أحمد شاهين',
+        designer: 'سارة',
+        designer_phone: '01099887766',
+        total_amount: 2500,
+        deposit_amount: 1000,
+        balance_due: 1500,
+        designer_cost: 700,
+        is_urgent: true,
+        notes: 'التركيز على اللون الذهبي والكحلي الملكي، تسليم بروفا خلال 24 ساعة.',
+        created_date: '2026-10-09'
+      },
+      {
+        id: 1002,
+        order_number: '#G-1002',
+        customer_name: 'كابتن رامي السباعي',
+        customer_phone: '01155443322',
+        order_type: 'باقة 15 بوست سوشيال ميديا جيم + غلاف فيسبوك',
+        status: 'goat_deposit_paid',
+        created_by: 'أحمد شاهين',
+        designer: 'أحمد كمال',
+        designer_phone: '01122334455',
+        total_amount: 2500,
+        deposit_amount: 1500,
+        balance_due: 1000,
+        designer_cost: 800,
+        is_urgent: false,
+        notes: 'بوستات رياضية تحفيزية عالية الطاقة بنمط SIUUU ⚡',
+        created_date: '2026-10-08'
+      },
+      {
+        id: 1003,
+        order_number: '#G-1003',
+        customer_name: 'م. حسام الدين (TechWave)',
+        customer_phone: '01244332211',
+        order_type: 'تصميم 3 صور مصغرة يوتيوب احترافية (Thumbnails)',
+        status: 'goat_completed',
+        created_by: 'أحمد شاهين',
+        designer: 'مريم عادل',
+        designer_phone: '01233445566',
+        total_amount: 600,
+        deposit_amount: 600,
+        balance_due: 0,
+        designer_cost: 200,
+        is_urgent: false,
+        notes: 'تم التسليم والاعتماد فوراً وتحصيل المبلغ كاملاً.',
+        created_date: '2026-10-07'
+      }
+    ];
+
+    let goatOrders = JSON.parse(localStorage.getItem('shahin_goat_orders_v1')) || defaultGoatOrders;
+    
+    // G.O.A.T Standalone Private Expenses (Subscriptions, Stock, Ads)
+    const defaultGoatExpenses = [
+      { id: 'g_exp_1', title: 'اشتراك شهري أداة الذكاء الاصطناعي Midjourney PRO', amount: 650, date: '2026-10-02' },
+      { id: 'g_exp_2', title: 'شراء حزمة خطوط وهوية بصرية تجارية (Creative Market)', amount: 450, date: '2026-10-05' }
+    ];
+    let goatExpenses = JSON.parse(localStorage.getItem('shahin_goat_expenses_v1')) || defaultGoatExpenses;
+
+    let isGoatUnlockedSession = false;
+    let activeGoatDrawerTab = 'ledger';
+    let currentPayingGoatDesigner = null;
+
+    function saveGoatState() {
+      localStorage.setItem('shahin_goat_orders_v1', JSON.stringify(goatOrders));
+      localStorage.setItem('shahin_goat_expenses_v1', JSON.stringify(goatExpenses));
+    }
+
+    // --- Passcode / PIN Protection (521985) ---
+    function tryOpenGoatModule() {
+      const canAccess = currentUser && (currentUser.id === 'ahmed_shahin' || !!currentUser.canAccessGoat);
+      if (!canAccess) {
+        alert('مديول G.O.A.T الحصري متاح فقط للمدير العام أحمد شاهين والمصرح لهم من قبله 🔒');
+        return;
+      }
+
+      // If already unlocked in current session, jump straight to G.O.A.T arena
+      if (isGoatUnlockedSession) {
+        switchView('goat');
+        return;
+      }
+
+      // Show luxury passcode prompt
+      const modal = document.getElementById('goatPasscodeModal');
+      const pinInp = document.getElementById('goatPinInput');
+      const errEl = document.getElementById('goatPinError');
+      if (errEl) errEl.classList.add('hidden');
+      if (pinInp) {
+        pinInp.value = '';
+        setTimeout(() => pinInp.focus(), 100);
+      }
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    function closeGoatPasscodeModal() {
+      const modal = document.getElementById('goatPasscodeModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function submitGoatPasscode() {
+      const pinInp = document.getElementById('goatPinInput');
+      const errEl = document.getElementById('goatPinError');
+      const val = pinInp ? pinInp.value.trim() : '';
+
+      if (val === '521985') {
+        isGoatUnlockedSession = true;
+        closeGoatPasscodeModal();
+        switchView('goat');
+      } else {
+        if (errEl) {
+          errEl.classList.remove('hidden');
+          errEl.innerText = 'رمز الأمان غير صحيح! الوصول محمي لأحمد شاهين.';
+        }
+        if (pinInp) {
+          pinInp.value = '';
+          pinInp.focus();
+        }
+      }
+    }
+
+    // Allow Enter key on PIN input
+    document.addEventListener('DOMContentLoaded', () => {
+      const pinInp = document.getElementById('goatPinInput');
+      if (pinInp) {
+        pinInp.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') submitGoatPasscode();
+        });
+      }
+    });
+
+    // --- Package Auto-fill Helper ---
+    function onSelectGoatPackage(pkgKey) {
+      const select = document.getElementById('goatQuickPackageSelect');
+      if (!select || !pkgKey) return;
+      const opt = select.options[select.selectedIndex];
+      if (!opt) return;
+
+      const price = parseFloat(opt.getAttribute('data-price')) || 0;
+      const cost = parseFloat(opt.getAttribute('data-cost')) || 0;
+      const label = opt.text.replace(/\(.*?\)/g, '').replace(/^[^\s]+\s/, '').trim();
+
+      const typeInp = document.getElementById('goatOrderType');
+      const totalInp = document.getElementById('goatTotalAmount');
+      const costInp = document.getElementById('goatDesignerCost');
+
+      if (typeInp && !typeInp.value.trim()) typeInp.value = label;
+      if (totalInp && (!totalInp.value || parseFloat(totalInp.value) === 0)) totalInp.value = price;
+      if (costInp && (!costInp.value || parseFloat(costInp.value) === 0)) costInp.value = cost;
+    }
+
+    // --- G.O.A.T Modal Handlers ---
+    function openNewGoatOrderModal(orderId = null) {
+      populateSavedDesignersDropdowns();
+      const modal = document.getElementById('goatOrderModal');
+      const form = document.getElementById('goatOrderForm');
+      const titleEl = document.getElementById('goatOrderModalTitle');
+      const submitText = document.getElementById('goatOrderSubmitBtnText');
+      const costGroup = document.getElementById('goatDesignerCostGroup');
+
+      // Strictly hide designer cost input if logged in user is NOT Ahmed Shahin
+      const isAhmed = currentUser && currentUser.id === 'ahmed_shahin';
+      if (costGroup) {
+        if (isAhmed) {
+          costGroup.classList.remove('hidden');
+        } else {
+          costGroup.classList.add('hidden');
+        }
+      }
+
+      if (orderId) {
+        const o = goatOrders.find(x => x.id === Number(orderId));
+        if (!o) return;
+        document.getElementById('goatEditingOrderId').value = o.id;
+        document.getElementById('goatCustName').value = o.customer_name || '';
+        document.getElementById('goatCustPhone').value = o.customer_phone || '';
+        document.getElementById('goatOrderType').value = o.order_type || '';
+        document.getElementById('goatTotalAmount').value = o.total_amount || 0;
+        document.getElementById('goatDepositAmount').value = o.deposit_amount || 0;
+        document.getElementById('goatDesignerSelect').value = o.designer || '';
+        document.getElementById('goatDesignerCost').value = o.designer_cost || 0;
+        document.getElementById('goatOrderNotes').value = o.notes || '';
+        document.getElementById('goatOrderUrgent').checked = !!o.is_urgent;
+        if (titleEl) titleEl.innerText = `تعديل أوردر ديجيتال (${o.order_number}) 🐐`;
+        if (submitText) submitText.innerText = 'تحديث بيانات الأوردر';
+      } else {
+        if (form) form.reset();
+        document.getElementById('goatEditingOrderId').value = '';
+        if (titleEl) titleEl.innerText = 'تسجيل أوردر تصميم ديجيتال جديد 🐐';
+        if (submitText) submitText.innerText = 'حفظ أوردر G.O.A.T';
+      }
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    function closeGoatOrderModal() {
+      const modal = document.getElementById('goatOrderModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function submitGoatOrder() {
+      const editId = document.getElementById('goatEditingOrderId').value;
+      const custName = document.getElementById('goatCustName').value.trim();
+      const custPhone = document.getElementById('goatCustPhone').value.trim();
+      const orderType = document.getElementById('goatOrderType').value.trim();
+      const totalAmt = parseFloat(document.getElementById('goatTotalAmount').value) || 0;
+      const depositAmt = parseFloat(document.getElementById('goatDepositAmount').value) || 0;
+      const designerName = document.getElementById('goatDesignerSelect').value;
+      const isUrgent = document.getElementById('goatOrderUrgent').checked;
+      const notes = document.getElementById('goatOrderNotes').value.trim();
+
+      const isAhmed = currentUser && currentUser.id === 'ahmed_shahin';
+      const costInp = document.getElementById('goatDesignerCost');
+      let designerCost = isAhmed ? (parseFloat(costInp.value) || 0) : 0;
+
+      // Find designer phone
+      let desPhone = '';
+      if (designerName) {
+        const foundDes = savedDesigners.find(d => d.name === designerName);
+        if (foundDes) desPhone = foundDes.phone || '';
+      }
+
+      const balanceDue = Math.max(0, totalAmt - depositAmt);
+
+      if (!custName || !orderType || totalAmt <= 0) {
+        alert('يرجى ملء اسم العميل، نوع التصميم، والسعر الإجمالي بشكل صحيح!');
+        return;
+      }
+
+      if (editId) {
+        const idx = goatOrders.findIndex(x => x.id === Number(editId));
+        if (idx !== -1) {
+          const prev = goatOrders[idx];
+          goatOrders[idx] = {
+            ...prev,
+            customer_name: custName,
+            customer_phone: custPhone,
+            order_type: orderType,
+            total_amount: totalAmt,
+            deposit_amount: depositAmt,
+            balance_due: balanceDue,
+            designer: designerName,
+            designer_phone: desPhone,
+            designer_cost: isAhmed ? designerCost : prev.designer_cost,
+            is_urgent: isUrgent,
+            notes: notes
+          };
+        }
+      } else {
+        const maxId = goatOrders.length > 0 ? Math.max(...goatOrders.map(o => o.id)) : 1000;
+        const newId = maxId + 1;
+        const initialStatus = depositAmt > 0 ? 'goat_deposit_paid' : 'goat_waiting_deposit';
+
+        const newOrder = {
+          id: newId,
+          order_number: `#G-${newId}`,
+          customer_name: custName,
+          customer_phone: custPhone,
+          order_type: orderType,
+          status: initialStatus,
+          created_by: currentUser ? currentUser.name : 'أحمد شاهين',
+          designer: designerName,
+          designer_phone: desPhone,
+          total_amount: totalAmt,
+          deposit_amount: depositAmt,
+          balance_due: balanceDue,
+          designer_cost: designerCost,
+          is_urgent: isUrgent,
+          notes: notes,
+          created_date: new Date().toISOString().split('T')[0]
+        };
+        goatOrders.unshift(newOrder);
+      }
+
+      saveGoatState();
+      closeGoatOrderModal();
+      renderGoatKanban();
+    }
+
+    function deleteGoatOrder(orderId) {
+      if (!confirm(`هل أنت متأكد من حذف أوردر G.O.A.T (#G-${orderId})؟`)) return;
+      goatOrders = goatOrders.filter(o => o.id !== Number(orderId));
+      saveGoatState();
+      renderGoatKanban();
+    }
+
+    // --- Drag and Drop Handlers for G.O.A.T ---
+    function handleGoatDragStart(e, orderId) {
+      e.dataTransfer.setData('text/plain', String(orderId));
+      e.dataTransfer.effectAllowed = 'move';
+    }
+
+    function handleGoatDragOver(e) {
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+    }
+
+    function handleGoatDrop(e, targetStageId) {
+      e.preventDefault();
+      const rawId = e.dataTransfer.getData('text/plain');
+      if (!rawId) return;
+      const orderId = Number(rawId);
+      const o = goatOrders.find(x => x.id === orderId);
+      if (!o) return;
+
+      if (o.status !== targetStageId) {
+        o.status = targetStageId;
+        // If moved to completed, settle balance
+        if (targetStageId === 'goat_completed') {
+          o.deposit_amount = o.total_amount;
+          o.balance_due = 0;
+        }
+        saveGoatState();
+        renderGoatKanban();
+      }
+    }
+
+    function filterGoatOrders() {
+      const q = (document.getElementById('goatSearchInput')?.value || '').toLowerCase().trim();
+      document.querySelectorAll('[id^="goat-card-"]').forEach(card => {
+        card.style.display = (!q || card.innerText.toLowerCase().includes(q)) ? 'block' : 'none';
+      });
+    }
+
+    // --- G.O.A.T Kanban Board & KPIs Renderer ---
+    function renderGoatKanban() {
+      const isAhmed = currentUser && currentUser.id === 'ahmed_shahin';
+
+      // 1. Compute KPIs & Financials (including standalone G.O.A.T expenses)
+      const totalRev = goatOrders.reduce((acc, o) => acc + (o.total_amount || 0), 0);
+      const totalPending = goatOrders.reduce((acc, o) => acc + (o.balance_due || 0), 0);
+      
+      // Compute total designer fees & paid amounts
+      let totalDesignerFees = 0;
+      let totalDesignerPaid = 0;
+      goatOrders.forEach(o => {
+        const fee = Number(o.designer_cost) || 0;
+        totalDesignerFees += fee;
+        totalDesignerPaid += (Number(o.designer_paid_amount) || (o.designer_paid ? fee : 0));
+      });
+
+      // Incorporate manual designer entries for G.O.A.T
+      designerManualEntries.filter(m => m.workspace === 'goat').forEach(m => {
+        const amt = Number(m.amount) || 0;
+        if (m.type === 'fee') {
+          totalDesignerFees += amt;
+        } else if (m.type === 'payout') {
+          totalDesignerPaid += amt;
+        }
+      });
+
+      const totalDesignerPending = Math.max(0, totalDesignerFees - totalDesignerPaid);
+
+      const totalGoatExpenses = goatExpenses.reduce((sum, e) => sum + (Number(e.amount) || 0), 0);
+      const netProfit = Math.max(0, totalRev - totalDesignerFees - totalGoatExpenses);
+
+      // Financial Stats Privacy Enforcement:
+      const adminStatsRow = document.getElementById('goatAdminStatsRow');
+      const openDrawerBtn = document.getElementById('goatOpenDrawerBtn');
+      if (openDrawerBtn) {
+        if (isAhmed) openDrawerBtn.classList.remove('hidden');
+        else openDrawerBtn.classList.add('hidden');
+      }
+
+      if (adminStatsRow) {
+        if (isAhmed) {
+          adminStatsRow.classList.remove('hidden');
+          const revEl = document.getElementById('goatStatRevenue');
+          const pendEl = document.getElementById('goatStatPending');
+          const desEl = document.getElementById('goatStatDesignerDues');
+          const profEl = document.getElementById('goatStatNetProfit');
+
+          if (revEl) revEl.innerHTML = `${totalRev.toLocaleString()} <span class="text-xs text-amber-400">ج.م</span>`;
+          if (pendEl) pendEl.innerHTML = `${totalPending.toLocaleString()} <span class="text-xs text-neutral-400">ج.م</span>`;
+          if (desEl) desEl.innerHTML = `${totalDesignerPending.toLocaleString()} <span class="text-xs text-neutral-400">ج.م</span>`;
+          if (profEl) profEl.innerHTML = `${netProfit.toLocaleString()} <span class="text-xs text-emerald-500">ج.م</span>`;
+        } else {
+          adminStatsRow.classList.add('hidden'); // STRICT PRIVACY FOR OTHER EMPLOYEES
+        }
+      }
+
+      // Update KPIs inside Drawer if open
+      const dNetProfit = document.getElementById('drawerGoatNetProfit');
+      const dDesPending = document.getElementById('drawerGoatDesignerPending');
+      if (dNetProfit) dNetProfit.innerText = `${netProfit.toLocaleString()} ج.م`;
+      if (dDesPending) dDesPending.innerText = `${totalDesignerPending.toLocaleString()} ج.م`;
+
+      // 2. Render 6 Kanban Columns
+      const board = document.getElementById('goatKanbanBoard');
+      if (!board) return;
+
+      board.innerHTML = GOAT_STAGES.map(stage => {
+        const stageOrders = goatOrders.filter(o => o.status === stage.id);
+        const colTotal = stageOrders.reduce((sum, o) => sum + (o.total_amount || 0), 0);
+
+        return `
+          <div class="flex-shrink-0 goat-kanban-col bg-neutral-950/80 rounded-2xl border border-neutral-800/80 flex flex-col max-h-full transition shadow-lg"
+               ondragover="handleGoatDragOver(event)"
+               ondrop="handleGoatDrop(event, '${stage.id}')">
+            
+            <!-- Column Header -->
+            <div class="p-3.5 border-b border-neutral-800 flex items-center justify-between border-t-2 ${stage.color} rounded-t-2xl bg-neutral-900/50">
+              <div class="flex items-center gap-2">
+                <span class="w-2.5 h-2.5 rounded-full ${stage.badge.split(' ')[0]}"></span>
+                <h4 class="font-bold text-xs text-white">${stage.title}</h4>
+                <span class="text-[10px] ${stage.badge} px-2 py-0.5 rounded-full font-bold font-mono">${stageOrders.length}</span>
+              </div>
+              ${isAhmed ? `
+                <span class="text-[10px] text-amber-400/90 font-mono font-bold">${colTotal.toLocaleString()} ج</span>
+              ` : ''}
+            </div>
+
+            <!-- Orders Container -->
+            <div class="flex-1 p-2.5 overflow-y-auto space-y-2.5 min-h-[460px]" id="goat-col-${stage.id}">
+              ${stageOrders.length === 0 ? `
+                <div class="h-32 border-2 border-dashed border-neutral-800/60 rounded-xl flex items-center justify-center text-neutral-600 text-xs font-bold">
+                  لا توجد طلبات هنا
+                </div>
+              ` : stageOrders.map(o => createGoatOrderCard(o, isAhmed)).join('')}
+            </div>
+
+          </div>
+        `;
+      }).join('');
+
+      // If drawer is open, render its active content
+      renderGoatDrawerContent();
+      lucide.createIcons();
+    }
+
+    function createGoatOrderCard(o, isAhmed) {
+      const isUrgent = !!o.is_urgent;
+      const fee = Number(o.designer_cost) || 0;
+      const paid = Number(o.designer_paid_amount) || (o.designer_paid ? fee : 0);
+      const isDesignerSettled = fee > 0 && paid >= fee;
+
+      return `
+        <div id="goat-card-${o.id}"
+             draggable="true"
+             ondragstart="handleGoatDragStart(event, ${o.id})"
+             class="p-3.5 bg-neutral-900/90 rounded-xl border border-amber-500/20 hover:border-amber-400 text-xs space-y-2.5 cursor-grab active:cursor-grabbing transition shadow-md group relative">
+          
+          <!-- Top Row: Order #, Urgency, Actions -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+              <span class="font-mono font-black text-amber-300 text-xs bg-amber-500/10 px-2 py-0.5 rounded border border-amber-500/30">${o.order_number}</span>
+              ${isUrgent ? `
+                <span class="text-[10px] bg-red-950 text-red-400 border border-red-800 px-1.5 py-0.5 rounded font-bold animate-pulse flex items-center gap-0.5">
+                  🔥 فوري
+                </span>
+              ` : ''}
+            </div>
+            <div class="flex items-center gap-1 opacity-80 group-hover:opacity-100 transition">
+              <button onclick="openNewGoatOrderModal(${o.id})" title="تعديل الأوردر" class="text-neutral-400 hover:text-amber-300 p-1 rounded transition">
+                <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+              </button>
+              <button onclick="deleteGoatOrder(${o.id})" title="حذف الأوردر" class="text-neutral-400 hover:text-red-400 p-1 rounded transition">
+                <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Customer & Order Description -->
+          <div>
+            <div class="flex items-center justify-between text-white font-bold text-xs mb-1">
+              <span>${o.customer_name}</span>
+              ${o.customer_phone ? `
+                <button onclick="launchWhatsApp('${o.customer_phone}', '${o.order_number}')" class="text-emerald-400 hover:text-emerald-300 text-[10px] flex items-center gap-0.5 transition" title="واتساب العميل">
+                  <i data-lucide="message-circle" class="w-3 h-3"></i>
+                  <span>واتساب</span>
+                </button>
+              ` : ''}
+            </div>
+            <p class="text-[11px] text-neutral-300 line-clamp-2 bg-neutral-950/60 p-1.5 rounded-lg border border-neutral-800/60 leading-relaxed font-medium">
+              🎨 ${o.order_type}
+            </p>
+          </div>
+
+          <!-- Designer Assigned -->
+          ${o.designer ? `
+            <div class="flex items-center justify-between bg-purple-950/20 px-2 py-1.5 rounded-lg border border-purple-900/30 text-[10px]">
+              <span class="text-purple-300 font-bold flex items-center gap-1">
+                <i data-lucide="palette" class="w-3 h-3"></i>
+                ${o.designer}
+              </span>
+              ${isAhmed && fee > 0 ? `
+                <div class="flex items-center gap-1.5 font-mono">
+                  <span class="text-amber-300/90 font-bold">${fee} ج</span>
+                  ${isDesignerSettled ? `
+                    <span class="text-emerald-400 text-[9px] bg-emerald-950/60 border border-emerald-800 px-1 rounded">خالص ✅</span>
+                  ` : `
+                    <span class="text-amber-400 text-[9px] bg-amber-950/60 border border-amber-800 px-1 rounded">متبقي ${fee - paid}</span>
+                  `}
+                </div>
+              ` : ''}
+            </div>
+          ` : ''}
+
+          <!-- Financial Snapshot (Strictly Hides Profit from non-Ahmed) -->
+          <div class="pt-2 border-t border-neutral-800 flex items-center justify-between text-[11px] font-mono">
+            <div class="text-neutral-300">
+              <span class="text-[9px] text-neutral-500 block">الإجمالي</span>
+              <span class="font-bold text-white">${(o.total_amount || 0).toLocaleString()} ج</span>
+            </div>
+            <div class="text-emerald-400">
+              <span class="text-[9px] text-neutral-500 block">العربون</span>
+              <span class="font-bold">${(o.deposit_amount || 0).toLocaleString()} ج</span>
+            </div>
+            <div class="${o.balance_due > 0 ? 'text-amber-400' : 'text-neutral-500'}">
+              <span class="text-[9px] text-neutral-500 block">المتبقي</span>
+              <span class="font-bold">${(o.balance_due || 0).toLocaleString()} ج</span>
+            </div>
+          </div>
+
+          <!-- Notes Snippet if available -->
+          ${o.notes ? `
+            <p class="text-[10px] text-neutral-400 italic bg-neutral-950/40 px-2 py-1 rounded border-l-2 border-amber-500/60 truncate">
+              📝 ${o.notes}
+            </p>
+          ` : ''}
+
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // --- 13.5 G.O.A.T SLIDE-OVER DRAWER (خزينة وحسابات شاهين المنفصلة بالكامل) ---
+    // =========================================================================
+
+    function openGoatDrawer() {
+      if (!currentUser || currentUser.id !== 'ahmed_shahin') {
+        alert('خزينة وحسابات G.O.A.T المستقلة خاصة بالمدير العام أحمد شاهين فقط 🔒');
+        return;
+      }
+      const backdrop = document.getElementById('goatDrawerBackdrop');
+      const drawer = document.getElementById('goatDrawer');
+      if (backdrop) backdrop.classList.remove('hidden');
+      if (drawer) drawer.classList.remove('translate-x-full');
+      renderGoatDrawerContent();
+      lucide.createIcons();
+    }
+
+    function closeGoatDrawer() {
+      const backdrop = document.getElementById('goatDrawerBackdrop');
+      const drawer = document.getElementById('goatDrawer');
+      if (backdrop) backdrop.classList.add('hidden');
+      if (drawer) drawer.classList.add('translate-x-full');
+    }
+
+    function switchGoatDrawerTab(tabName) {
+      activeGoatDrawerTab = tabName;
+      const tabLedger = document.getElementById('goatDrawerTabLedger');
+      const tabExpenses = document.getElementById('goatDrawerTabExpenses');
+      const secLedger = document.getElementById('goatDrawerSectionLedger');
+      const secExpenses = document.getElementById('goatDrawerSectionExpenses');
+
+      if (tabName === 'ledger') {
+        if (tabLedger) {
+          tabLedger.className = "flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.25)]";
+        }
+        if (tabExpenses) {
+          tabExpenses.className = "flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800";
+        }
+        if (secLedger) secLedger.classList.remove('hidden');
+        if (secExpenses) secExpenses.classList.add('hidden');
+      } else {
+        if (tabLedger) {
+          tabLedger.className = "flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-neutral-900 text-neutral-300 hover:text-white hover:bg-neutral-800";
+        }
+        if (tabExpenses) {
+          tabExpenses.className = "flex-1 py-2 rounded-xl text-xs font-bold transition flex items-center justify-center gap-1.5 bg-gradient-to-r from-amber-500 to-yellow-500 text-black shadow-[0_0_15px_rgba(245,158,11,0.25)]";
+        }
+        if (secLedger) secLedger.classList.add('hidden');
+        if (secExpenses) secExpenses.classList.remove('hidden');
+      }
+      renderGoatDrawerContent();
+      lucide.createIcons();
+    }
+
+    function renderGoatDrawerContent() {
+      // 1. Group designers from G.O.A.T orders only
+      const designerMap = {};
+      goatOrders.forEach(o => {
+        if (!o.designer) return;
+        const dName = o.designer.trim();
+        if (!designerMap[dName]) {
+          designerMap[dName] = {
+            name: dName,
+            phone: o.designer_phone || '',
+            ordersCount: 0,
+            totalFees: 0,
+            paidFees: 0,
+            unpaidFees: 0
+          };
+        }
+        const fee = Number(o.designer_cost) || 0;
+        const paid = Number(o.designer_paid_amount) || (o.designer_paid ? fee : 0);
+        designerMap[dName].ordersCount += 1;
+        designerMap[dName].totalFees += fee;
+        designerMap[dName].paidFees += paid;
+        designerMap[dName].unpaidFees += Math.max(0, fee - paid);
+        if (o.designer_phone && !designerMap[dName].phone) {
+          designerMap[dName].phone = o.designer_phone;
+        }
+      });
+
+      // Incorporate manual historical entries (fees & payouts) for G.O.A.T workspace
+      designerManualEntries.filter(m => m.workspace === 'goat').forEach(m => {
+        const dName = (m.designer && m.designer.trim()) ? m.designer.trim() : null;
+        if (!dName) return;
+
+        if (!designerMap[dName]) {
+          designerMap[dName] = {
+            name: dName,
+            phone: '',
+            ordersCount: 0,
+            totalFees: 0,
+            paidFees: 0,
+            unpaidFees: 0
+          };
+        }
+
+        const amt = Number(m.amount) || 0;
+        if (m.type === 'fee') {
+          designerMap[dName].totalFees += amt;
+          designerMap[dName].unpaidFees += amt;
+        } else if (m.type === 'payout') {
+          designerMap[dName].paidFees += amt;
+          designerMap[dName].unpaidFees = Math.max(0, designerMap[dName].unpaidFees - amt);
+        }
+      });
+
+      const listContainer = document.getElementById('goatDesignersLedgerList');
+      if (listContainer) {
+        const designersList = Object.values(designerMap);
+        if (designersList.length === 0) {
+          listContainer.innerHTML = `
+            <div class="p-6 text-center text-neutral-500 font-bold bg-neutral-950/60 rounded-xl border border-neutral-800 text-xs">
+              لا توجد أوردرات مسندة لمصممين في G.O.A.T حتى الآن
+            </div>
+          `;
+        } else {
+          listContainer.innerHTML = designersList.map(d => `
+            <div class="p-3.5 bg-neutral-950 rounded-xl border border-neutral-800 hover:border-amber-500/30 transition text-xs space-y-2">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                  <div class="w-7 h-7 rounded-lg bg-purple-950/80 border border-purple-800 flex items-center justify-center font-bold text-purple-300">
+                    <i data-lucide="palette" class="w-3.5 h-3.5"></i>
+                  </div>
+                  <div>
+                    <span class="font-bold text-white block">${d.name}</span>
+                    <span class="text-[10px] text-neutral-400 font-mono">${d.ordersCount} أوردر ديجيتال</span>
+                  </div>
+                </div>
+                <div class="text-left font-mono">
+                  <span class="text-[11px] text-neutral-300 block">إجمالي أتعابه: <b class="text-white">${d.totalFees.toLocaleString()} ج</b></span>
+                  ${d.unpaidFees > 0 ? `
+                    <span class="text-[10px] text-amber-400 font-bold block">متبقي له: ${d.unpaidFees.toLocaleString()} ج</span>
+                  ` : `
+                    <span class="text-[10px] text-emerald-400 font-bold block">تم السداد كاملاً ✅</span>
+                  `}
+                </div>
+              </div>
+
+              <!-- Action Buttons -->
+              <div class="flex items-center justify-end gap-2 pt-1 border-t border-neutral-800/80">
+                ${d.phone ? `
+                  <button type="button" onclick="sendGoatDesignerWhatsAppReport('${d.name.replace(/'/g, "\\'")}', '${d.phone}', ${d.totalFees}, ${d.paidFees}, ${d.unpaidFees})" class="bg-purple-950/50 hover:bg-purple-900 border border-purple-800/60 text-purple-300 hover:text-white px-2.5 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1 transition">
+                    <i data-lucide="message-circle" class="w-3 h-3"></i>
+                    <span>إرسال كشف واتساب</span>
+                  </button>
+                ` : ''}
+                
+                ${d.unpaidFees > 0 ? `
+                  <button type="button" onclick="openPayGoatDesignerModal('${d.name.replace(/'/g, "\\'")}', ${d.unpaidFees})" class="bg-emerald-600/30 hover:bg-emerald-600 border border-emerald-500/40 text-emerald-300 hover:text-white px-3 py-1 rounded-lg text-[11px] font-bold flex items-center gap-1 transition shadow-[0_0_10px_rgba(16,185,129,0.2)]">
+                    <i data-lucide="banknote" class="w-3 h-3"></i>
+                    <span>سداد دفعة 💵</span>
+                  </button>
+                ` : `
+                  <button type="button" onclick="openPayGoatDesignerModal('${d.name.replace(/'/g, "\\'")}', 0)" class="bg-neutral-800 hover:bg-neutral-700 text-neutral-400 hover:text-white px-2 py-1 rounded-lg text-[10px] font-bold transition">
+                    دفعة إضافية
+                  </button>
+                `}
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      // 2. Render G.O.A.T Standalone Expenses
+      const expContainer = document.getElementById('goatExpensesList');
+      if (expContainer) {
+        if (goatExpenses.length === 0) {
+          expContainer.innerHTML = `
+            <div class="p-4 text-center text-neutral-500 text-xs font-bold bg-neutral-950/60 rounded-xl border border-neutral-800">
+              لا توجد مصاريف خاصة مسجلة لـ G.O.A.T
+            </div>
+          `;
+        } else {
+          expContainer.innerHTML = goatExpenses.map(e => `
+            <div class="p-2.5 bg-neutral-950/80 rounded-xl border border-neutral-800/80 flex items-center justify-between text-xs hover:border-neutral-700 transition">
+              <div>
+                <span class="font-bold text-white block">${e.title}</span>
+                <span class="text-[10px] text-neutral-500 font-mono">${e.date || ''}</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <span class="font-bold font-mono text-red-400">-${(Number(e.amount) || 0).toLocaleString()} ج</span>
+                <button type="button" onclick="deleteGoatExpense('${e.id}')" class="text-neutral-500 hover:text-red-400 p-1 transition" title="حذف المصروف">
+                  <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+            </div>
+          `).join('');
+        }
+      }
+
+      lucide.createIcons();
+    }
+
+    // --- Standalone Expense Handlers ---
+    function submitGoatExpense() {
+      const titleInp = document.getElementById('goatExpTitle');
+      const amtInp = document.getElementById('goatExpAmount');
+      const title = titleInp ? titleInp.value.trim() : '';
+      const amt = amtInp ? parseFloat(amtInp.value) : 0;
+
+      if (!title || !amt || amt <= 0) {
+        alert('يرجى إدخال بيان المصروف والمبلغ بشكل صحيح');
+        return;
+      }
+
+      const customDate = document.getElementById('goatExpDate') ? document.getElementById('goatExpDate').value : '';
+      const expDate = customDate ? customDate : new Date().toISOString().split('T')[0];
+
+      goatExpenses.unshift({
+        id: 'g_exp_' + Date.now(),
+        title: title,
+        amount: amt,
+        date: expDate
+      });
+
+      saveGoatState();
+      if (titleInp) titleInp.value = '';
+      if (amtInp) amtInp.value = '';
+      if (document.getElementById('goatExpDate')) document.getElementById('goatExpDate').value = '';
+      renderGoatKanban();
+      alert(`تم تسجيل المصروف (${amt.toLocaleString()} ج.م) بتاريخ (${expDate}) بنجاح في دفتر G.O.A.T المستقل الخاص بشاهين ✅`);
+    }
+
+    function deleteGoatExpense(expId) {
+      if (!confirm('هل تريد حذف هذا المصروف من دفتر G.O.A.T؟')) return;
+      goatExpenses = goatExpenses.filter(e => e.id !== expId);
+      saveGoatState();
+      renderGoatKanban();
+    }
+
+    // --- Pay Designer in G.O.A.T Modal Handlers ---
+    function openPayGoatDesignerModal(designerName, unpaidDue) {
+      currentPayingGoatDesigner = designerName;
+      document.getElementById('payGoatDesignerName').innerText = designerName;
+      document.getElementById('payGoatDesignerDue').innerText = `${unpaidDue.toLocaleString()} ج.م`;
+      const inp = document.getElementById('payGoatAmountInput');
+      if (inp) {
+        inp.value = unpaidDue > 0 ? unpaidDue : '';
+        setTimeout(() => inp.focus(), 50);
+      }
+      const modal = document.getElementById('payGoatDesignerModal');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    function closePayGoatDesignerModal() {
+      const modal = document.getElementById('payGoatDesignerModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+      currentPayingGoatDesigner = null;
+    }
+
+    function confirmPayGoatDesigner() {
+      if (!currentPayingGoatDesigner) return;
+      const inp = document.getElementById('payGoatAmountInput');
+      const payAmt = parseFloat(inp.value) || 0;
+
+      if (payAmt <= 0) {
+        alert('يرجى إدخال مبلغ سداد صحيح');
+        return;
+      }
+
+      // Allocate payout across this designer's G.O.A.T orders
+      let remainingToAllocate = payAmt;
+      const designerOrders = goatOrders.filter(o => o.designer === currentPayingGoatDesigner);
+
+      for (let ord of designerOrders) {
+        if (remainingToAllocate <= 0) break;
+        const fee = Number(ord.designer_cost) || 0;
+        const currentPaid = Number(ord.designer_paid_amount) || (ord.designer_paid ? fee : 0);
+        const orderDue = Math.max(0, fee - currentPaid);
+
+        if (orderDue > 0) {
+          const payingThis = Math.min(orderDue, remainingToAllocate);
+          ord.designer_paid_amount = currentPaid + payingThis;
+          ord.designer_paid = (ord.designer_paid_amount >= fee);
+          remainingToAllocate -= payingThis;
+        }
+      }
+
+      saveGoatState();
+      closePayGoatDesignerModal();
+      renderGoatKanban();
+
+      alert(`تم تسجيل سداد (${payAmt.toLocaleString()} ج.م) للمصمم (${currentPayingGoatDesigner}) بنجاح!\n` +
+            `تم خصم المبلغ من رصيده في دفتر G.O.A.T المنفصل تماماً دون المساس بحسابات الاستوديو العامة ✅`);
+    }
+
+    function sendGoatDesignerWhatsAppReport(dName, phone, total, paid, due) {
+      if (!phone) return alert('لم يتم تسجيل رقم واتساب لهذا المصمم');
+      let clean = phone.replace(/[^0-9]/g, '');
+      if (clean.startsWith('01')) clean = '2' + clean;
+
+      const msg = `مرحباً يا ${dName} 🎨\n` +
+                  `كشف حسابك الخاص بأوردرات الديجيتال (براند G.O.A.T 🐐):\n` +
+                  `-----------------------------\n` +
+                  `▪ إجمالي أتعاب التصاميم: ${total.toLocaleString()} ج.م\n` +
+                  `▪ تم سداده لحضرتك: ${paid.toLocaleString()} ج.م\n` +
+                  `▪ صافي المستحق لك حالياً: ${due.toLocaleString()} ج.م\n` +
+                  `-----------------------------\n` +
+                  `شكراً لإبداعك الدائم معنا ✨\n` +
+                  `أحمد شاهين 👑`;
+
+      window.open(`https://wa.me/${clean}?text=${encodeURIComponent(msg)}`, '_blank');
+    }
+
+    // =========================================================================
+    // --- 14. DUAL WORKSPACE NAVIGATION & MANUAL DESIGNER ENTRIES (HISTORICAL) ---
+    // =========================================================================
+
+    function handleHeaderNewOrder() {
+      const goatView = document.getElementById('goatView');
+      const isGoatActive = goatView && !goatView.classList.contains('hidden');
+      if (isGoatActive) {
+        openNewGoatOrderModal();
+      } else {
+        openNewOrderModal();
+      }
+    }
+
+    function switchGoatTab(tabKey) {
+      // 1. Ensure user has G.O.A.T permissions
+      const canAccess = currentUser && (currentUser.id === 'ahmed_shahin' || !!currentUser.canAccessGoat);
+      if (!canAccess) {
+        alert('مديول G.O.A.T الحصري متاح فقط للمدير العام أحمد شاهين والمصرح لهم من قبله 🔒');
+        return;
+      }
+
+      // 2. Ensure session is unlocked or prompt PIN
+      if (!isGoatUnlockedSession) {
+        tryOpenGoatModule();
+        return;
+      }
+
+      // 3. Ensure G.O.A.T view is open
+      switchView('goat');
+
+      // Update Desktop G.O.A.T Tab button active styles
+      const goatDesktopTabs = [
+        { id: 'navGoatKanban', key: 'kanban' },
+        { id: 'navGoatTreasury', key: 'treasury' },
+        { id: 'navGoatExpenses', key: 'expenses' },
+        { id: 'navGoatDesigners', key: 'designers' }
+      ];
+
+      goatDesktopTabs.forEach(t => {
+        const btn = document.getElementById(t.id);
+        if (!btn) return;
+        if (t.key === tabKey) {
+          btn.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-black bg-gradient-to-r from-amber-500 to-yellow-500 text-black flex items-center gap-1.5 transition shadow-[0_0_15px_rgba(245,158,11,0.25)]";
+        } else {
+          btn.className = "px-3 py-1.5 rounded-lg text-xs sm:text-sm font-bold text-amber-300 hover:text-white hover:bg-neutral-800 flex items-center gap-1.5 transition";
+        }
+      });
+
+      // Update Mobile G.O.A.T Tab button active styles
+      const goatMobileTabs = [
+        { id: 'mobileNavGoatKanban', key: 'kanban' },
+        { id: 'mobileNavGoatTreasury', key: 'treasury' },
+        { id: 'mobileNavGoatExpenses', key: 'expenses' },
+        { id: 'mobileNavGoatDesigners', key: 'designers' }
+      ];
+
+      goatMobileTabs.forEach(t => {
+        const btn = document.getElementById(t.id);
+        if (!btn) return;
+        if (t.key === tabKey) {
+          btn.classList.add('active');
+        } else {
+          btn.classList.remove('active');
+        }
+      });
+
+      // Execute action based on tabKey
+      if (tabKey === 'kanban') {
+        closeGoatDrawer();
+      } else if (tabKey === 'treasury') {
+        openGoatDrawer();
+        switchGoatDrawerTab('ledger');
+      } else if (tabKey === 'expenses') {
+        openGoatDrawer();
+        switchGoatDrawerTab('expenses');
+      } else if (tabKey === 'designers') {
+        openGoatDrawer();
+        switchGoatDrawerTab('ledger');
+      }
+
+      lucide.createIcons();
+    }
+
+    // --- MANUAL DESIGNER ENTRIES (HISTORICAL PAST DATA) ---
+    function openManualDesignerEntryModal(targetWorkspace = 'adv') {
+      const modal = document.getElementById('manualDesignerEntryModal');
+      const wsSelect = document.getElementById('manualDesignerWorkspace');
+      const designerSelect = document.getElementById('manualDesignerSelect');
+      const customNameInp = document.getElementById('manualDesignerCustomName');
+      const amtInp = document.getElementById('manualDesignerAmount');
+      const dateInp = document.getElementById('manualDesignerDate');
+      const notesInp = document.getElementById('manualDesignerNotes');
+      const typeSelect = document.getElementById('manualDesignerEntryType');
+
+      if (wsSelect) wsSelect.value = targetWorkspace;
+      if (customNameInp) customNameInp.value = '';
+      if (amtInp) amtInp.value = '';
+      if (notesInp) notesInp.value = '';
+      if (typeSelect) typeSelect.value = 'fee';
+      if (dateInp) dateInp.value = new Date().toISOString().split('T')[0];
+
+      // Populate designer dropdown options from savedDesigners and existing orders
+      if (designerSelect) {
+        const namesSet = new Set();
+        savedDesigners.forEach(d => { if (d && d.name) namesSet.add(d.name.trim()); });
+        orders.forEach(o => { if (o && o.designer && o.designer.trim() && o.designer !== 'غير محدد') namesSet.add(o.designer.trim()); });
+        goatOrders.forEach(o => { if (o && o.designer && o.designer.trim()) namesSet.add(o.designer.trim()); });
+        designerManualEntries.forEach(m => { if (m && m.designer && m.designer.trim()) namesSet.add(m.designer.trim()); });
+
+        const optionsHtml = ['<option value="">-- اختر من المصممين المسجلين أو اكتب اسماً جديداً بالأسفل --</option>']
+          .concat(Array.from(namesSet).sort().map(name => `<option value="${name}">${name}</option>`))
+          .join('');
+        designerSelect.innerHTML = optionsHtml;
+      }
+
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      lucide.createIcons();
+    }
+
+    function closeManualDesignerEntryModal() {
+      const modal = document.getElementById('manualDesignerEntryModal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function onManualDesignerSelectChange(val) {
+      const customInp = document.getElementById('manualDesignerCustomName');
+      if (customInp && val) {
+        customInp.value = val;
+      }
+    }
+
+    function submitManualDesignerEntry() {
+      const selectVal = document.getElementById('manualDesignerSelect') ? document.getElementById('manualDesignerSelect').value.trim() : '';
+      const customName = document.getElementById('manualDesignerCustomName') ? document.getElementById('manualDesignerCustomName').value.trim() : '';
+      const designerName = customName || selectVal;
+
+      const type = document.getElementById('manualDesignerEntryType') ? document.getElementById('manualDesignerEntryType').value : 'fee';
+      const amt = parseFloat(document.getElementById('manualDesignerAmount')?.value) || 0;
+      const customDate = document.getElementById('manualDesignerDate') ? document.getElementById('manualDesignerDate').value : '';
+      const entryDate = customDate ? customDate : new Date().toISOString().split('T')[0];
+      const workspace = document.getElementById('manualDesignerWorkspace') ? document.getElementById('manualDesignerWorkspace').value : 'adv';
+      const notes = document.getElementById('manualDesignerNotes') ? document.getElementById('manualDesignerNotes').value.trim() : '';
+
+      if (!designerName) {
+        alert('يرجى تحديد أو كتابة اسم المصمم!');
+        return;
+      }
+      if (amt <= 0) {
+        alert('يرجى إدخال مبلغ صحيح أكبر من الصفر!');
+        return;
+      }
+
+      const newEntry = {
+        id: 'mdes_' + Date.now(),
+        designer: designerName,
+        type: type, // 'fee' or 'payout'
+        amount: amt,
+        date: entryDate,
+        workspace: workspace, // 'adv' or 'goat'
+        notes: notes,
+        created_at: new Date().toISOString()
+      };
+
+      designerManualEntries.unshift(newEntry);
+      localStorage.setItem('shahin_designer_manual_entries_v1', JSON.stringify(designerManualEntries));
+
+      // Also ensure this designer name is saved to savedDesigners list if not existing
+      if (!savedDesigners.some(d => d.name === designerName)) {
+        savedDesigners.push({ id: 'des_' + Date.now(), name: designerName, phone: '' });
+        localStorage.setItem('shahin_saved_designers_v1', JSON.stringify(savedDesigners));
+        populateSavedDesignersDropdowns();
+      }
+
+      // Sync state and refresh tables
+      saveState();
+      renderExpensesAndProfit();
+      renderGoatKanban();
+      closeManualDesignerEntryModal();
+
+      const typeLabel = type === 'fee' ? 'أتعاب مستحقة' : 'سداد دفعة';
+      const wsLabel = workspace === 'goat' ? 'براند G.O.A.T' : 'استوديو ADV';
+      alert(`تم تسجيل (${typeLabel}) بقيمة (${amt.toLocaleString()} ج.م) للمصمم (${designerName}) بتاريخ (${entryDate}) في (${wsLabel}) بنجاح! 📅`);
+    }
+
+    function deleteManualDesignerEntry(entryId) {
+      if (!confirm('هل تريد حذف هذه الحركة اليدوية المسجلة؟')) return;
+      designerManualEntries = designerManualEntries.filter(m => m.id !== entryId);
+      localStorage.setItem('shahin_designer_manual_entries_v1', JSON.stringify(designerManualEntries));
+      saveState();
+      renderExpensesAndProfit();
+      renderGoatKanban();
     }
   </script>
 </body>
